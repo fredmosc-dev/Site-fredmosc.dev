@@ -1,0 +1,42 @@
+name: Generate HTML from Markdown Articles
+
+on:
+  push:
+    paths:
+      - 'articles/**/*.md'
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-html:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: |
+          npm install -g marked js-yaml
+      
+      - name: Generate HTML files
+        run: |
+          node .github/scripts/generate-articles.js
+      
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add articles/*.html articles/articles-index.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-generate HTML from Markdown [skip ci]" && git push)

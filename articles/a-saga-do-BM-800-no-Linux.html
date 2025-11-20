@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Funcionava no Windows na mesma máquina. No Linux? Bem... essa é a história de duas sagas que pareciam uma só.">
+    <meta name="keywords" content="Linux, PulseAudio, OBS">
+    <meta name="author" content="Fred Mosc">
+    
+    <meta property="og:title" content="A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧 - fredmosc.dev | Frederick Moschkowich">
+    <meta property="og:description" content="Funcionava no Windows na mesma máquina. No Linux? Bem... essa é a história de duas sagas que pareciam uma só.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="articles/a-saga-do-BM-800-no-Linux.html">
+    <meta property="article:published_time" content="2025-11-16">
+    <meta property="article:author" content="Fred Mosc">
+    
+    <title>A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧 - Frederick Moschkowich | Mentor Cloud & DevOps</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        .share-container {
+            margin: 40px 0;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+        }
+        .share-container h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .share-buttons-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .share-btn-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .share-btn-new:hover { 
+            opacity: 0.9; 
+            color: white; 
+            transform: translateY(-2px);
+        }
+        
+        /* Cores das Redes */
+        .bg-linkedin { background-color: #0077b5; }
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .bg-x { background-color: #000000; }
+        .bg-facebook { background-color: #1877F2; }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <img src="../images/logo.png" alt="FredMosc.dev">
+                </a>
+                
+                <nav class="nav" id="nav">
+                    <a href="../index.html#home" class="nav-link">Início</a>
+                    <a href="../about.html" class="nav-link">Sobre</a> 
+                    <a href="../blog.html" class="nav-link">Blog</a>
+                    <a href="../index.html#cursos" class="nav-link">Cursos</a>
+                    <a href="../index.html#eventos" class="nav-link">Eventos</a>
+                    <a href="../index.html#contato" class="nav-link">Contato</a>
+                </nav>
+                
+                <button class="btn btn-primary desktop-only" onclick="window.location.href='../index.html#contato'">
+                    Whitepapers Gratuitos
+                </button>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="article-header">
+        <div class="container">
+            <div class="article-breadcrumb-container" style="max-width: 720px; margin: 0 auto;">
+                <a href="../blog.html" class="article-breadcrumb">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Voltar para todos os artigos
+                </a>
+                
+                <span class="badge badge-secondary">Arquitetura</span>
+                
+                <h1 class="article-title">A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧</h1>
+                
+                <div class="article-meta">
+                    <div class="article-meta-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        15 de novembro de 2025
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        9 min de leitura
+                    </div>
+                </div>
+                
+                <div class="article-tags">
+                    <span class="article-tag">Linux</span><span class="article-tag">PulseAudio</span><span class="article-tag">OBS</span>
+                </div>
+                
+                </div>
+        </div>
+    </section>
+
+    <section class="article-content">
+        <div class="container">
+            <div class="article-body">
+                <p>A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧 </p>
+<p>&quot;Funcionava no Windows na mesma máquina. No Linux? Bem... essa é a história de duas sagas que pareciam uma só.&quot; </p>
+<h1>Prólogo: Eu Só Queria Gravar Uns Vídeos</h1>
+<p>Olha, eu não sou engenheiro de áudio. Eu só tinha um problema simples: </p>
+<p>Os vídeos que eu gravava no OBS tinham áudio HORRÍVEL. </p>
+<p>Picotes. Silêncios aleatórios. &quot;Chiados&quot; digitais. Sabe aquele áudio de tutorial de YouTube feito por uma criança de 10 anos gritando no microfone? Exatamente isso. </p>
+<p>E o pior: o mesmo microfone funcionava PERFEITAMENTE na mesma máquina com Windows! </p>
+<p>Meu setup: </p>
+<p>● Hardware : Dell Inspiron (notebook) i7 13ª geração, 32GB RAM </p>
+<p>● SO : Ubuntu 22.04 LTS </p>
+<p>● Microfone : BM-800 USB (chip Texas Instruments PCM2902) </p>
+<p>● Software : OBS Studio v30+ (para websocket nativo) </p>
+<p>Então comecei a saga. Uma saga que, somando as duas frentes de batalha, durou quase 8 horas. </p>
+<h1>Capítulo 1: O Primeiro Vilão - Sobrecarga de CPU (A Saga de 4 Horas)</h1>
+<p>Minha primeira jornada de 4 horas foi focada no OBS, achando que o problema estava lá. Fase 1: O &quot;Áudio Estourado&quot; (Clipping) </p>
+<p>O primeiro teste mostrou o áudio &quot;estourando&quot; (batendo no vermelho). </p>
+<p>✅ Google Meet : Áudio perfeito </p>
+<p>❌ OBS : Áudio distorcido </p>
+<p>O Meet aplica filtros automáticos (Controle de Ganho). O OBS estava capturando o áudio &quot;cru&quot;, que estava com o ganho de entrada muito alto no Linux. </p>
+<p>Solução: Reduzi o ganho de entrada do microfone nas configurações de som do Linux até o medidor do OBS ficar na faixa amarela (-15dB). </p>
+<p>Fase 2: O &quot;Áudio Picotado&quot; (Sobrecarga de CPU) </p>
+<p>O áudio parou de estourar, mas agora tinha picotes grosseiros (falhas de 1 segundo). O painel &quot;Estatísticas&quot; do OBS foi claro: &quot;Quadros perdidos devidos à demora na codificação&quot; .</p>
+<p>Diagnóstico: Meu i7 de 13ª Geração (um monstro!) estava sobrecarregado. O OBS estava usando o codificador de software (x264) para comprimir o vídeo 1080p e, na falta de &quot;fôlego&quot;, ele &quot;jogava fora&quot; pacotes de áudio. </p>
+<p>A Solução Lógica: Parar de usar o CPU e usar a placa de vídeo integrada (Intel Iris Xe) através da aceleração de hardware: FFmpeg VAAPI .</p>
+<p>Fase 3: A Caça ao &quot;Pacote Fantasma&quot; (O Inferno do apt) </p>
+<p>Aqui a jornada de 4 horas realmente começou. A opção FFmpeg VAAPI simplesmente não aparecia no OBS. </p>
+<ol>
+<li><p>A Hipótese: Faltava o driver intel-media-driver. Tentei sudo apt install intel-media-driver. </p>
+</li>
+<li><p>Erro 1: E: Impossível encontrar o pacote. </p>
+</li>
+<li><p>Erro 2: Suspeitamos que o repositório universe estava desativado. Não estava. </p>
+</li>
+<li><p>Erro 3: Descobrimos um erro de certificado do repositório magalu.cloud, que estava quebrando o apt update. </p>
+</li>
+<li><p>Solução 3: Desativei o repositório do Magalu (sudo nano /etc/apt/sources.list.d/magalu.list e comentei a linha). </p>
+</li>
+<li><p>Erro 4: Mesmo com o apt funcionando, o pacote intel-media-driver... não existia.</p>
+</li>
+</ol>
+<p>A Descoberta (O Nome Errado!) </p>
+<p>Depois de horas, descobri o problema: o nome do pacote estava errado! </p>
+<p>Rodei apt-cache search va-api e encontrei o nome correto: intel-media-va-driver. </p>
+<p>Rodei apt-cache policy intel-media-va-driver e... </p>
+<p>intel-media-va-driver: </p>
+<p>Instalado: 22.3.1+dfsg1-1ubuntu2 </p>
+<p>O driver JÁ ESTAVA INSTALADO O TEMPO TODO! </p>
+<p>A única coisa que faltava era o utilitário de teste: </p>
+<p>Bash </p>
+<p>sudo apt install vainfo </p>
+<p>Rodei vainfo e... sucesso! O hardware estava pronto. O OBS (depois de reiniciado) finalmente mostrou a opção Codificador FFmpeg VAAPI. </p>
+<p>Resultado da Fase 1: CPU aliviado, sem sobrecarga de codificação. </p>
+<h1>Capítulo 2: A Traição - O Segundo Vilão (USB Autosuspend) Eu estava pronto para comemorar. Mudei o codificador para FFmpeg VAAPI, cliquei em &quot;Gravar&quot; e...</h1>
+<p>O ÁUDIO AINDA ESTAVA INUTILIZÁVEL! 💀 </p>
+<p>Não eram mais os &quot;micro-picotes&quot; de CPU. Eram &quot;apagões&quot;. Silêncios de 1 segundo. </p>
+<p>A Revelação nos Logs </p>
+<p>Frustrado, comecei a investigar os logs do kernel: </p>
+<p>Bash </p>
+<p>sudo dmesg | grep -i usb </p>
+<p>E encontrei isso: </p>
+<p>usb 3-1: USB disconnect, device number 5 </p>
+<p>usb 3-1: new full-speed USB device number 6 using xhci_hcd </p>
+<p>usb 3-1: New USB device found, idVendor=08bb, idProduct=2902 </p>
+<p>WTF?! O microfone estava sendo desconectado e reconectado pelo Linux constantemente! </p>
+<p>Identificando o BM-800 </p>
+<p>Bash lsusb | grep &quot;08bb:2902&quot; </p>
+<h1>Bus 003 Device 005: ID 08bb:2902 Texas Instruments PCM2902 Audio Codec</h1>
+<p>O BM-800 USB usa um chip Texas Instruments PCM2902 . E descobri que esse chip tem um problema conhecido no Linux: sofre com USB autosuspend .</p>
+<p>O Que é USB Autosuspend? </p>
+<p>É um recurso de economia de energia do kernel Linux. A ideia é: </p>
+<p>● Dispositivo USB sem uso por 2 segundos → kernel desliga ele </p>
+<p>● Dispositivo precisa trabalhar → kernel religa ele </p>
+<p>Na prática : O kernel desligava o microfone no meio da gravação! E o pior: num notebook PLUGADO NA TOMADA. Obrigado, kernel. </p>
+<h1>Capítulo 3: A Solução Definitiva (O Script Udev) 🎯</h1>
+<p>A solução era óbvia: desabilitar o autosuspend para este dispositivo específico. </p>
+<p>Script Definitivo: Desabilitar USB Autosuspend </p>
+<p>Criei um script que resolve de forma persistente: </p>
+<p>Bash </p>
+<p>#!/bin/bash </p>
+<h1>Script: correcao_usb.sh echo &quot;============================================&quot;</h1>
+<p>echo &quot; CORREÇÃO - DESCONEXÕES USB DO MICROFONE&quot; </p>
+<p>echo &quot;============================================&quot; </p>
+<p>echo &quot;&quot; </p>
+<h1>1. Identificar o microfone</h1>
+<p>echo &quot;[1/4] Identificando microfone (08bb:2902)...&quot; </p>
+<p>DEVICE=$(lsusb | grep &quot;08bb:2902&quot; )</p>
+<p>if [ -z &quot;$DEVICE &quot; ]; then </p>
+<p>echo &quot;❌ Microfone (08bb:2902) não encontrado!&quot; </p>
+<p>exit 1</p>
+<p>fi </p>
+<p>echo &quot;✓ Encontrado: $DEVICE &quot;</p>
+<p>echo &quot;&quot; </p>
+<h1>2. Criar regra udev PERSISTENTE</h1>
+<p>echo &quot;[2/4] Criando regra udev para desabilitar autosuspend...&quot; </p>
+<p>sudo tee /etc/udev/rules.d/50-usb-audio-fix.rules &gt; /dev/null &lt;&lt; &#39;EOF&#39; </p>
+<h1>Desabilitar autosuspend para BM-800 (TI PCM2902)</h1>
+<p>ACTION== &quot;add&quot; , SUBSYSTEM== &quot;usb&quot; , ATTR{idVendor}== &quot;08bb&quot; , ATTR{idProduct}== &quot;2902&quot; ,TEST== &quot;power/control&quot; , ATTR{power/control}= &quot;on&quot; </p>
+<p>ACTION== &quot;add&quot; , SUBSYSTEM== &quot;usb&quot; , ATTR{idVendor}== &quot;08bb&quot; , ATTR{idProduct}== &quot;2902&quot; ,TEST== &quot;power/autosuspend&quot; , ATTR{power/autosuspend}= &quot;-1&quot; </p>
+<p>ACTION== &quot;add&quot; , SUBSYSTEM== &quot;usb&quot; , ATTR{idVendor}== &quot;08bb&quot; , ATTR{idProduct}== &quot;2902&quot; ,TEST== &quot;power/autosuspend_delay_ms&quot; , ATTR{power/autosuspend_delay_ms}= &quot;-1&quot; </p>
+<p>EOF </p>
+<p>echo &quot;✓ Regra criada&quot; </p>
+<p>echo &quot;&quot; </p>
+<h1>3. Recarregar regras udev</h1>
+<p>echo &quot;[3/4] Recarregando regras udev...&quot; </p>
+<p>sudo udevadm control --reload-rules </p>
+<p>sudo udevadm trigger </p>
+<p>echo &quot;✓ Regras recarregadas&quot; </p>
+<p>echo &quot;&quot; </p>
+<h1>4. Aplicar IMEDIATAMENTE ao dispositivo atual</h1>
+<p>echo &quot;[4/4] Aplicando configuração ao dispositivo atual...&quot; </p>
+<p>for device in /sys/bus/usb/devices/*/; do </p>
+<p>if [ -f &quot;$device /idVendor&quot; ] &amp;&amp; [ -f &quot;$device /idProduct&quot; ]; then </p>
+<p>vendor=$(cat &quot;$device /idVendor&quot; )</p>
+<p>product=$(cat &quot;$device /idProduct&quot; )</p>
+<p>if [ &quot;$vendor &quot; = &quot;08bb&quot; ] &amp;&amp; [ &quot;$product &quot; = &quot;2902&quot; ]; then # Desabilitar autosuspend </p>
+<p>echo &quot;on&quot; | sudo tee &quot;$device /power/control&quot; &gt; /dev/null </p>
+<p>echo &quot;-1&quot; | sudo tee &quot;$device /power/autosuspend&quot; &gt; /dev/null 2&gt;&amp;1 </p>
+<p>echo &quot;-1&quot; | sudo tee &quot;$device /power/autosuspend_delay_ms&quot; &gt; /dev/null 2&gt;&amp;1 </p>
+<p>echo &quot;✓ Autosuspend desabilitado para BM-800&quot; </p>
+<p>fi </p>
+<p>fi </p>
+<p>done </p>
+<p>echo &quot;&quot; </p>
+<p>echo &quot;============================================&quot; </p>
+<p>echo &quot; CONFIGURAÇÃO CONCLUÍDA&quot; </p>
+<p>echo &quot;============================================&quot; </p>
+<p>echo &quot;IMPORTANTE: DESCONECTE e RECONECTE o microfone&quot; </p>
+<p>echo &quot;&quot; </p>
+<p>Como Usar: </p>
+<p>Bash </p>
+<h1>1. Salvar o script</h1>
+<p>nano correcao_usb.sh </p>
+<h1>2. Dar permissão</h1>
+<p>chmod +x correcao_usb.sh </p>
+<h1>3. Executar</h1>
+<p>./correcao_usb.sh </p>
+<h1>4. Reconectar o microfone (desplugue, aguarde 5s, plugue de volta)</h1>
+<p>Resultado: O áudio ficou CONTÍNUO . Zero picotes. Zero &quot;apagões&quot;. </p>
+<h1>Capítulo 4: O Polimento - &quot;Parece que Estou Num Banheiro&quot; 🚽 🎤 O áudio finalmente estava contínuo, mas agora tinha outro problema: reverberação .</h1>
+<p>O BM-800 é um microfone condensador . Ele capta TUDO: </p>
+<p>● Som da sua voz ✓ </p>
+<p>● Eco da parede ✗</p>
+<p>● Barulho do teclado ✗</p>
+<p>Com o áudio funcionando, agora os filtros do OBS fariam diferença! </p>
+<p>Filtros no OBS (A Ordem Importa!) </p>
+<p>Apliquei os filtros no OBS nesta sequência exata: </p>
+<ol>
+<li>Noise Suppression (RNNoise) - Remove Ruído de Fundo</li>
+</ol>
+<p>Método: RNNoise (boa qualidade, baixo uso de CPU) </p>
+<p>O que faz: Remove ruído constante (ventilador, PC, ar condicionado). </p>
+<ol start="2">
+<li>Noise Gate - Remove Som Quando Você Não Está Falando</li>
+</ol>
+<p>Close Threshold: -50 dB </p>
+<p>Open Threshold: -45 dB </p>
+<p>Attack Time: 25ms </p>
+<p>Hold Time: 200ms </p>
+<p>Release Time: 150ms O que faz: Corta o áudio quando você não está falando (elimina respiração, teclado). </p>
+<ol start="3">
+<li>Compressor - Equaliza o Volume</li>
+</ol>
+<p>Ratio: 3:1 </p>
+<p>Threshold: -18 dB </p>
+<p>Attack: 6ms </p>
+<p>Release: 60ms </p>
+<p>O que faz: Volume consistente (você não grita nem sussurra). </p>
+<ol start="4">
+<li>Limiter - Proteção Contra Picos</li>
+</ol>
+<p>Threshold: -6 dB </p>
+<p>O que faz: Impede que o áudio &quot;estoure&quot; (distorça). </p>
+<p>Resultado: De áudio amador pra qualidade de podcast!  🎙 </p>
+<h1>Capítulo 5: A Configuração Perfeita (Unindo Tudo)</h1>
+<p>Depois de 8 horas de batalha contra dois vilões (CPU e USB), esta é a configuração de ouro: </p>
+<p>Arquivo → Configurações → Saída → Modo Avançado → Gravação: Ini, TOML </p>
+<p>Formato de gravação: Matroska Video (.mkv) </p>
+<p>└─ (Ative &quot;Converter automaticamente para mp4&quot; em Avançado) </p>
+<p>Encoder de Vídeo: FFmpeg VAAPI H.264 </p>
+<p>└─ (Usa a GPU Intel, libera o CPU) </p>
+<p>Encoder de Áudio: FFmpeg Opus </p>
+<p>└─ Bitrate: 160 kbps (ótimo para voz) </p>
+<p>Arquivo → Configurações → Áudio: </p>
+<p>Ini, TOML </p>
+<p>Taxa de Amostragem: 48 kHz (padrão profissional) </p>
+<p>Canais: Estéreo </p>
+<p>Áudio do microfone: PCM2902 Audio Codec Monofônico analógico </p>
+<h1>Epílogo: O Que Aprendi Nessa Jornada</h1>
+<ol>
+<li>A Lição das 8 Horas</li>
+</ol>
+<p>Foram duas sagas de 4 horas: </p>
+<ol>
+<li><p>A Batalha do apt: Uma luta contra o apt, pacotes com nomes errados e certificados quebrados, só para descobrir que o driver intel-media-va-driver já estava lá. A solução foi mudar o codificador do OBS para FFmpeg VAAPI .</p>
+</li>
+<li><p>A Batalha do Kernel: Uma luta contra os logs do dmesg, para descobrir que o vilão real era o USB Autosuspend . A solução foi o script udev .</p>
+</li>
+</ol>
+<p>Moral: O problema raramente é um só. Eu estava com dois problemas independentes que causavam o mesmo sintoma (áudio picotado). </p>
+<ol start="2">
+<li>O Problema Quase Nunca É Onde Você Acha Que É</li>
+</ol>
+<p>Gastei 4 horas mexendo em configurações do OBS e apt. O problema? Kernel desligando o USB. Nada a ver com áudio, era power management! </p>
+<p>Moral da história: investigue os logs . A resposta está lá. </p>
+<ol start="3">
+<li>Linux Te Obriga a Entender Como as Coisas Funcionam</li>
+</ol>
+<p>No Windows, o áudio funcionava &quot;magicamente&quot;. No Linux, tive que aprender sobre: </p>
+<p>● Codificação de software (x264) vs. Hardware (VAAPI) </p>
+<p>● O inferno que é o apt quando um PPA quebra </p>
+<p>● Gerenciamento de energia do Kernel (USB Autosuspend) </p>
+<p>● Regras udev </p>
+<p>● Chips de áudio (TI PCM2902) </p>
+<p>Isso te torna um profissional melhor. Quando algo quebrar em produção, você sabe onde procurar. </p>
+<ol start="4">
+<li>Documentar Ajuda Todo Mundo</li>
+</ol>
+<p>Quando você resolve um problema obscuro no Linux, documente! A próxima pessoa com o mesmo problema vai te agradecer eternamente. </p>
+<h1>TL;DR (Para os Apressados) 📝 Seu áudio do BM-800 no Linux está picotando? São dois problemas :</h1>
+<p>1⃣ Problema 1: Sobrecarga de CPU </p>
+<p>O OBS usa x264 (CPU) por padrão. </p>
+<p>Solução: Mude para aceleração de hardware. </p>
+<p>Configurações &gt; Saída &gt; Gravação &gt; Codificador: FFmpeg VAAPI H.264 </p>
+<p>(Se não aparecer, sua saga do apt começa...) </p>
+<p>2⃣ Problema 2: USB Autosuspend (O Vilão Principal) </p>
+<p>O Linux desliga seu microfone (chip PCM2902) para economizar energia. </p>
+<p>Solução: Desative isso com um script udev. </p>
+<p>(Use o script do &quot;Capítulo 3&quot; deste post) </p>
+<p>3⃣ Problema 3: Áudio de Banheiro </p>
+<p>O microfone é condensador e capta eco. </p>
+<p>Solução: Use filtros no OBS (Nessa ordem): </p>
+<ol>
+<li><p>Noise Suppression (RNNoise) </p>
+</li>
+<li><p>Noise Gate </p>
+</li>
+<li><p>Compressor </p>
+</li>
+<li><p>Limiter</p>
+</li>
+</ol>
+
+            </div>
+
+            <div class="share-container" style="max-width: 720px; margin: 40px auto;">
+                <h3>Gostou do artigo? Compartilhe com sua rede:</h3>
+                <div class="share-buttons-row">
+                    <a href="#" onclick="shareLinkedIn(); return false;" class="share-btn-new bg-linkedin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        LinkedIn
+                    </a>
+                    
+                    <a href="#" onclick="shareWhatsApp(); return false;" class="share-btn-new bg-whatsapp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        WhatsApp
+                    </a>
+
+                    <button onclick="copyLinkInstagram()" class="share-btn-new bg-instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Instagram (Copiar Link)
+                    </button>
+
+                    <a href="#" onclick="shareX(); return false;" class="share-btn-new bg-x">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                        X
+                    </a>
+
+                    <a href="#" onclick="shareFacebook(); return false;" class="share-btn-new bg-facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        Facebook
+                    </a>
+                </div>
+            </div>
+            
+            <div class="article-author">
+                <div class="author-info">
+                    <img src="../images/profile.png" alt="Fred Mosc" class="author-avatar">
+                    <div class="author-details">
+                        <h3>Frederick Moschkowich</h3>
+                        <p>Mentor de Carreira & Tech. Com <strong>30 anos de estrada</strong> e alma de jornalista, descomplico a Nuvem e o DevOps para você construir uma base sólida e escalar sua carreira.</p>                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <img src="../images/logo.png" alt="FredMosc.dev" class="footer-logo">
+                    <p>Onde a Arquitetura de Nuvem encontra a clareza do Jornalismo. 
+                        Com <strong>30 anos de estrada</strong>, minha missão é simples: 
+                        te ensinar os fundamentos para que sua carreira — e sua infraestrutura — 
+                        nunca parem de escalar.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="../about.html">Sobre mim</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                        <li><a href="../index.html#cursos">Cursos</a></li>
+                        <li><a href="../index.html#eventos">Eventos</a></li>
+                        <li><a href="../index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Redes Sociais</h3>
+                    <div class="footer-social">
+                        <a href="https://linkedin.com/in/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/fredmosc.dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@fredmosc_dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-youtube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                        <a href="mailto:contato@fredmosc.dev" class="social-btn social-btn-secondary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 fredmosc.dev. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    
+    <script>
+        function shareLinkedIn() {
+            const url = window.location.href;
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+        }
+        
+        function shareWhatsApp() {
+            const url = window.location.href;
+            const text = 'Confira este artigo do Fred Mosc: A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧';
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareX() {
+            const url = window.location.href;
+            const text = 'A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤 🐧 - via @fredmosc_dev';
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function copyLinkInstagram() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(function() {
+                alert('Link copiado! Agora é só colar nos Stories ou mandar no Direct.');
+            }, function(err) {
+                console.error('Erro ao copiar link: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

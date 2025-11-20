@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{excerpt}}">
+    <meta name="keywords" content="{{tags}}">
+    <meta name="author" content="Fred Mosc">
+    
+    <meta property="og:title" content="{{title}} - fredmosc.dev | Frederick Moschkowich">
+    <meta property="og:description" content="{{excerpt}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{url}}">
+    <meta property="article:published_time" content="{{date}}">
+    <meta property="article:author" content="Fred Mosc">
+    
+    <title>{{title}} - Frederick Moschkowich | Mentor Cloud & DevOps</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        .share-container {
+            margin: 40px 0;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+        }
+        .share-container h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .share-buttons-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .share-btn-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .share-btn-new:hover { 
+            opacity: 0.9; 
+            color: white; 
+            transform: translateY(-2px);
+        }
+        
+        /* Cores das Redes */
+        .bg-linkedin { background-color: #0077b5; }
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .bg-x { background-color: #000000; }
+        .bg-facebook { background-color: #1877F2; }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <img src="../images/logo.png" alt="FredMosc.dev">
+                </a>
+                
+                <nav class="nav" id="nav">
+                    <a href="../index.html#home" class="nav-link">Início</a>
+                    <a href="../about.html" class="nav-link">Sobre</a> 
+                    <a href="../blog.html" class="nav-link">Blog</a>
+                    <a href="../index.html#cursos" class="nav-link">Cursos</a>
+                    <a href="../index.html#eventos" class="nav-link">Eventos</a>
+                    <a href="../index.html#contato" class="nav-link">Contato</a>
+                </nav>
+                
+                <button class="btn btn-primary desktop-only" onclick="window.location.href='../index.html#contato'">
+                    Whitepapers Gratuitos
+                </button>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="article-header">
+        <div class="container">
+            <div class="article-breadcrumb-container" style="max-width: 720px; margin: 0 auto;">
+                <a href="../blog.html" class="article-breadcrumb">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Voltar para todos os artigos
+                </a>
+                
+                <span class="badge badge-secondary">{{category}}</span>
+                
+                <h1 class="article-title">{{title}}</h1>
+                
+                <div class="article-meta">
+                    <div class="article-meta-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        {{formattedDate}}
+                    </div>
+                    <div class="article-meta-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {{readTime}} de leitura
+                    </div>
+                </div>
+                
+                <div class="article-tags">
+                    {{tagsHtml}}
+                </div>
+                
+                </div>
+        </div>
+    </section>
+
+    <section class="article-content">
+        <div class="container">
+            <div class="article-body">
+                {{content}}
+            </div>
+
+            <div class="share-container" style="max-width: 720px; margin: 40px auto;">
+                <h3>Gostou do artigo? Compartilhe com sua rede:</h3>
+                <div class="share-buttons-row">
+                    <a href="#" onclick="shareLinkedIn(); return false;" class="share-btn-new bg-linkedin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        LinkedIn
+                    </a>
+                    
+                    <a href="#" onclick="shareWhatsApp(); return false;" class="share-btn-new bg-whatsapp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        WhatsApp
+                    </a>
+
+                    <button onclick="copyLinkInstagram()" class="share-btn-new bg-instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Instagram (Copiar Link)
+                    </button>
+
+                    <a href="#" onclick="shareX(); return false;" class="share-btn-new bg-x">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                        X
+                    </a>
+
+                    <a href="#" onclick="shareFacebook(); return false;" class="share-btn-new bg-facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        Facebook
+                    </a>
+                </div>
+            </div>
+            
+            <div class="article-author">
+                <div class="author-info">
+                    <img src="../images/profile.png" alt="Fred Mosc" class="author-avatar">
+                    <div class="author-details">
+                        <h3>Frederick Moschkowich</h3>
+                        <p>Mentor de Carreira & Tech. Com <strong>30 anos de estrada</strong> e alma de jornalista, descomplico a Nuvem e o DevOps para você construir uma base sólida e escalar sua carreira.</p>                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <img src="../images/logo.png" alt="FredMosc.dev" class="footer-logo">
+                    <p>Onde a Arquitetura de Nuvem encontra a clareza do Jornalismo. 
+                        Com <strong>30 anos de estrada</strong>, minha missão é simples: 
+                        te ensinar os fundamentos para que sua carreira — e sua infraestrutura — 
+                        nunca parem de escalar.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="../about.html">Sobre mim</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                        <li><a href="../index.html#cursos">Cursos</a></li>
+                        <li><a href="../index.html#eventos">Eventos</a></li>
+                        <li><a href="../index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Redes Sociais</h3>
+                    <div class="footer-social">
+                        <a href="https://linkedin.com/in/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/fredmosc.dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@fredmosc_dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-youtube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                        <a href="mailto:contato@fredmosc.dev" class="social-btn social-btn-secondary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 fredmosc.dev. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    
+    <script>
+        function shareLinkedIn() {
+            const url = window.location.href;
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+        }
+        
+        function shareWhatsApp() {
+            const url = window.location.href;
+            const text = 'Confira este artigo do Fred Mosc: {{title}}';
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareX() {
+            const url = window.location.href;
+            const text = '{{title}} - via @fredmosc_dev';
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function copyLinkInstagram() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(function() {
+                alert('Link copiado! Agora é só colar nos Stories ou mandar no Direct.');
+            }, function(err) {
+                console.error('Erro ao copiar link: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

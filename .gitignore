@@ -1,0 +1,28 @@
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (se usar localmente)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporários
+.tmp/
+.cache/
+
+# Não ignorar arquivos gerados (eles devem ir pro repo)
+# !articles/*.html
+# !articles/articles-index.json
+
+QUICK_START.md
+README.md
