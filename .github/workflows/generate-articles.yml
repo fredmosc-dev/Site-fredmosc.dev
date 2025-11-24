@@ -28,7 +28,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          npm install -g marked js-yaml
+          npm install marked js-yaml
       
       - name: Generate HTML files
         run: |

@@ -69,8 +69,6 @@ Aqui a jornada de 2 horas realmente começou. A opção `FFmpeg VAAPI` simplesme
 
 #### 🔄 A Saga dos Erros
 
-| Tentativa |Problema | Status | |-----------|----------|--------| |  **1**  | Faltava o driver `intel-media-driver`  | ❌ `E: Impossível encontrar o pacote`  | |  **2**  | Repositório `universe` desativado? | ❌ Estava ativo | |  **3**  | Erro de certificado do repositório `magalu.cloud`  | ✅ Desativei o repositório | |  **4**  | Pacote `intel-media-driver` não existe | 🤔 Nome errado! |
-
 | Tentativa | Problema | Status |
 | :--- | :--- | :--- |
 | **1** | Faltava o driver `intel-media-driver` | ❌ `E: Impossível encontrar o pacote`  | |
