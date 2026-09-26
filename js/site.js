@@ -149,6 +149,7 @@
     return m ? MESES[+m[2] - 1] + ' de ' + m[1] : fmtDate(data);
   }
   function city(local) { return String(local).split('/')[0].trim(); }
+  function evName(p) { return esc(p.evento) + (p.por ? ' <span class="por">via ' + esc(p.por) + '</span>' : ''); }
   function isOnline(local) { return /online/i.test(local); }
 
   function splitPalcos(d) {
@@ -211,7 +212,7 @@
   function featured(passados) {
     return passados.filter(function (p) { return p.destaque; }).map(function (p) {
       return '<article class="feat">' + photo(p.foto, p.evento + ' · ' + city(p.local), 'feat-pic') +
-        '<div class="feat-body"><div class="k">' + esc(p.evento) + '</div>' +
+        '<div class="feat-body"><div class="k">' + evName(p) + '</div>' +
         '<h3>' + esc(p.tema) + '</h3>' + (p.resumo ? '<p>' + esc(p.resumo) + '</p>' : '') +
         '<div class="where">' + esc(p.local) + ' · ' + fmtDate(p.data) + '</div></div></article>';
     }).join('');
@@ -263,14 +264,14 @@
             '<div><div class="tag analise"><i></i>Tese · ' + esc(t.rotulo) + '</div>' +
             '<h2>' + esc(t.titulo) + '</h2><p class="q">' + esc(t.tese) + '</p>' + ideias +
             '<div class="where2">' + ap.map(function (p) {
-              return '<b>' + esc(p.evento) + '</b> · ' + esc(p.local) + ' · ' + fmtDate(p.data);
+              return '<b>' + evName(p) + '</b> · ' + esc(p.local) + ' · ' + fmtDate(p.data);
             }).join('<br>') + '</div>' + link + '</div></article>';
         }).join('');
         var hist = $('#talks-hist');
         if (hist) {
           hist.innerHTML = sp.passados.map(function (p) {
             return '<div class="row"><span class="d">' + fmtDate(p.data) + '</span><span class="e">' +
-              esc(p.evento) + ' · ' + esc(p.local) + (p.destaque ? ' <em class="star">destaque</em>' : '') +
+              evName(p) + ' · ' + esc(p.local) + (p.destaque ? ' <em class="star">destaque</em>' : '') +
               '</span><span class="c">' + esc(p.tema) + '</span></div>';
           }).join('');
         }

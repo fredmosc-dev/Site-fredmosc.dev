@@ -303,3 +303,18 @@ a.tcard:hover{border-color:rgba(255,255,255,.45)}
   .feat-grid{grid-template-columns:1fr}
   .feat .feat-pic{height:200px}
 }
+
+/* ---------- redes no topo ---------- */
+.site-header .wrap{gap:24px}
+.site-header .nav{margin-left:auto}
+.social{display:flex;align-items:center;gap:4px}
+.social a{display:inline-flex;padding:8px;border-radius:6px;color:var(--noite)}
+.social a:hover{color:var(--azul);background:var(--cinza)}
+.social-top{padding-left:16px;border-left:1px solid var(--linha)}
+.social-nav{display:none}
+.por{font-weight:400;color:inherit;opacity:.75;font-size:.92em}
+@media (max-width:760px){
+  .social-top{display:none}
+  .nav .social-nav{display:flex;padding-top:12px;gap:8px}
+  .nav .social-nav a{border-bottom:0;padding:10px}
+}
