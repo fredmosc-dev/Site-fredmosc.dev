@@ -18,8 +18,8 @@
         ["O elevador:", "a mesma decisão, contada de um jeito na garagem com os devs e de outro na cobertura com o CFO."],
         ["ADR:", "quatro campos, cinco minutos. O menor documento com o maior retorno da carreira."]
       ],
-      "foto": null,
-      "legenda_foto": "DevParaná na Estrada · Curitiba",
+      "foto": "images/palestras/engenharia-de-escolhas-maringa.jpg",
+      "legenda_foto": "The Developers Live Weekend · Maringá",
       "artigo": "articles/engenharia-de-escolhas.html"
     },
     {
@@ -28,8 +28,8 @@
       "rotulo": "IA",
       "tese": "A IA escreve o código. A decisão, e quem responde por ela às 3h da manhã, continua sendo sua.",
       "ideias": [],
-      "foto": null,
-      "legenda_foto": "The Developers Live · Londrina",
+      "foto": "images/palestras/prompt-hacktown-palco.jpg",
+      "legenda_foto": "HackTown · Santa Rita do Sapucaí",
       "artigo": null
     },
     {
@@ -38,7 +38,7 @@
       "rotulo": "Custo",
       "tese": "O preço da IA não está na tabela do fornecedor. Está no dólar que oscila, na auditoria que chega depois e no controle que você entregou sem perceber.",
       "ideias": [],
-      "foto": null,
+      "foto": "images/palestras/custo-invisivel-sebrae-maringa.jpg",
       "legenda_foto": "Sebrae · Maringá",
       "artigo": null
     }
@@ -46,7 +46,7 @@
   "palcos": [
     {"data": "2026-10", "evento": "Latinoware 2026", "local": "Foz do Iguaçu/PR", "tema": "Nova versão de Engenharia de Escolhas", "tese": "engenharia-de-escolhas", "confirmado": false},
     {"data": "2026-09-10", "evento": "The Developers Live", "por": "Papo de Sysadmin", "local": "Londrina/PR (online)", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura"},
-    {"data": "2026-09-06", "evento": "HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura", "destaque": true, "foto": null, "resumo": "Na trilha de IA corporativa do festival: a IA é o meio, a decisão continua sendo humana."},
+    {"data": "2026-09-06", "evento": "HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura", "destaque": true, "foto": "images/palestras/hacktown-destaque.jpg", "resumo": "Na trilha de IA corporativa do festival: a IA é o meio, a decisão continua sendo humana."},
     {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
     {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR", "tema": "O Custo Invisível da IA", "tese": "custo-invisivel-da-ia"},
     {"data": "2026-05-08", "evento": "Gramado Summit", "local": "Gramado/RS", "tema": "Soberania de dados, muito além da latência", "institucional": true, "destaque": true, "foto": null},

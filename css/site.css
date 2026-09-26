@@ -285,7 +285,7 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,58,82,.10
 .phero .wall-item{color:var(--texto-3)} .phero .wall-item.hot{color:var(--noite)} .phero .wall-label{color:var(--texto-3)}
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:44px}
 .feat{border-radius:var(--raio);overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);display:flex;flex-direction:column}
-.feat .feat-pic{height:240px;border-radius:0}
+.feat .feat-pic{height:auto;aspect-ratio:16/9;border-radius:0;object-fit:cover}
 .feat-body{padding:24px;display:flex;flex-direction:column;gap:10px}
 .feat .k,.tcard .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--laranja)}
 .feat h3{font-size:26px;line-height:1.15}
@@ -301,7 +301,6 @@ a.tcard:hover{border-color:rgba(255,255,255,.45)}
   .stat-4{grid-template-columns:1fr 1fr;gap:24px 36px}
   .wall-item{font-size:20px} .wall-item.hot{font-size:28px}
   .feat-grid{grid-template-columns:1fr}
-  .feat .feat-pic{height:200px}
 }
 
 /* ---------- redes no topo ---------- */
