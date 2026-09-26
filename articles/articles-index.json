@@ -1,10 +1,26 @@
 [
   {
+    "title": "Engenharia de Escolhas: a soft skill por trás da soberania de dados",
+    "excerpt": "Todo arquiteto sabe provisionar uma VM. O que separa o sênior é decidir com informação incompleta e deixar escrito o porquê.",
+    "date": "2026-10-10",
+    "readTime": "8 min",
+    "category": "Análise",
+    "tags": [
+      "Arquitetura",
+      "ADR",
+      "Soberania de dados",
+      "LGPD",
+      "Carreira sênior"
+    ],
+    "url": "articles/engenharia-de-escolhas.html",
+    "slug": "engenharia-de-escolhas"
+  },
+  {
     "title": "A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤🐧",
     "excerpt": "Funcionava no Windows na mesma máquina. No Linux? Bem... essa é a história de duas sagas que pareciam uma só.",
     "date": "2025-11-16",
     "readTime": "10 min",
-    "category": "Arquitetura",
+    "category": "Relato",
     "tags": [
       "Linux",
       "PulseAudio",

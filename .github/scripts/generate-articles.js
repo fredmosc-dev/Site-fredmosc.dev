@@ -38,14 +38,31 @@ function calculateReadTime(content) {
     return `${minutes} min`;
 }
 
-// Function to format date
+// Function to format date (UTC, para não cair no dia anterior por causa do fuso)
 function formatDate(dateString) {
-    const date = new Date(dateString);
+    const date = new Date(dateString + 'T00:00:00Z');
     return date.toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: 'long',
-        year: 'numeric'
+        year: 'numeric',
+        timeZone: 'UTC'
     });
+}
+
+// Tipo de conteúdo da marca fredmosc.tech (Notícia, Análise, Relato, Fora da tech)
+function contentType(category) {
+    const c = String(category || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    if (c.startsWith('noticia')) return { cls: 'noticia', label: 'Notícia' };
+    if (c.startsWith('analise')) return { cls: 'analise', label: 'Análise técnica' };
+    if (c.startsWith('relato')) return { cls: 'relato', label: 'Relato' };
+    if (c.startsWith('fora')) return { cls: 'fora', label: 'Fora da tech' };
+    return { cls: 'analise', label: String(category || '') };
+}
+
+// Escapa texto que vai para atributos e títulos do HTML
+function esc(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 // Function to generate HTML from markdown file
@@ -56,7 +73,10 @@ function generateHTML(mdFile) {
     const content = fs.readFileSync(mdPath, 'utf8');
     
     try {
-        const { frontmatter, markdown } = parseFrontmatter(content);
+        const parsed = parseFrontmatter(content);
+        const frontmatter = parsed.frontmatter;
+        // O título já aparece no cabeçalho do artigo: remove o "# Título" do início do corpo, se houver
+        const markdown = parsed.markdown.replace(/^\s*#\s+[^\n]*\n/, '');
         
         // Generate HTML content from markdown
         const htmlContent = marked(markdown);
@@ -75,17 +95,24 @@ function generateHTML(mdFile) {
             .join('');
         
         // Replace placeholders in template
-        let html = template
-            .replace(/{{title}}/g, frontmatter.title)
-            .replace(/{{excerpt}}/g, frontmatter.excerpt)
-            .replace(/{{category}}/g, frontmatter.category)
-            .replace(/{{date}}/g, frontmatter.date)
-            .replace(/{{formattedDate}}/g, formatDate(frontmatter.date))
-            .replace(/{{readTime}}/g, readTime)
-            .replace(/{{tags}}/g, frontmatter.tags.join(', '))
-            .replace(/{{tagsHtml}}/g, tagsHtml)
-            .replace(/{{content}}/g, htmlContent)
-            .replace(/{{url}}/g, url);
+        // (uma passada só e com função: o conteúdo pode ter "$1", "$&" ou "{{algo}}" sem quebrar nada)
+        const type = contentType(frontmatter.category);
+        const values = {
+            title: esc(frontmatter.title),
+            excerpt: esc(frontmatter.excerpt),
+            category: esc(frontmatter.category),
+            categoryClass: type.cls,
+            categoryLabel: type.label,
+            date: esc(frontmatter.date),
+            formattedDate: formatDate(frontmatter.date),
+            readTime: esc(readTime),
+            tags: esc(frontmatter.tags.join(', ')),
+            tagsHtml: tagsHtml,
+            content: htmlContent,
+            url: url
+        };
+        const html = template.replace(/{{(\w+)}}/g, (m, key) =>
+            Object.prototype.hasOwnProperty.call(values, key) ? values[key] : m);
         
         // Write HTML file
         const htmlPath = path.join(articlesDir, htmlFilename);

@@ -2,7 +2,7 @@
 title: "A Saga do BM-800 no Linux: 8 Horas, 2 Vilões e 1 Final Feliz 🎤🐧"
 excerpt: "Funcionava no Windows na mesma máquina. No Linux? Bem... essa é a história de duas sagas que pareciam uma só."
 date: "2025-11-16"
-category: "Arquitetura"
+category: "Relato"
 tags: ["Linux", "PulseAudio", "OBS", "#Audio", "#Ubuntu"]
 
 ---

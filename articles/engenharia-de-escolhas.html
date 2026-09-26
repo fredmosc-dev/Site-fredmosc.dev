@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engenharia de Escolhas: a soft skill por trás da soberania de dados · fredmosc.tech</title>
+    <meta name="description" content="Todo arquiteto sabe provisionar uma VM. O que separa o sênior é decidir com informação incompleta e deixar escrito o porquê.">
+    <meta name="author" content="Frederick Moschkowich">
+    <link rel="canonical" href="https://fredmosc.tech/articles/engenharia-de-escolhas.html">
+    <meta property="og:site_name" content="fredmosc.tech">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Engenharia de Escolhas: a soft skill por trás da soberania de dados · fredmosc.tech">
+    <meta property="og:description" content="Todo arquiteto sabe provisionar uma VM. O que separa o sênior é decidir com informação incompleta e deixar escrito o porquê.">
+    <meta property="og:url" content="https://fredmosc.tech/articles/engenharia-de-escolhas.html">
+    <meta property="og:image" content="https://fredmosc.tech/images/og-fredmosc-tech.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0267AE">
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="preload" href="../fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/site.css">
+    <meta name="keywords" content="Arquitetura, ADR, Soberania de dados, LGPD, Carreira sênior">
+    <meta property="article:published_time" content="2026-10-10">
+</head>
+<body data-root="../">
+<header class="site-header">
+    <div class="wrap">
+        <a class="logo" href="../index.html" aria-label="fredmosc.tech, página inicial">
+            <!-- PROVISÓRIO: trocar pelo arquivo oficial do logo quando o designer entregar -->
+            <img src="../images/anel-provisorio.svg" alt="" width="30" height="30">
+            <span><span class="f">fredmosc</span><span class="p">.</span><span class="t">tech</span></span>
+        </a>
+        <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="nav" id="nav" aria-label="Principal">
+            <a href="../blog.html" aria-current="page">Análises</a><a href="../palestras.html">Palestras</a><a href="../about.html">Sobre</a><a href="mailto:contato@fredmosc.dev">Contato</a>
+        </nav>
+    </div>
+</header>
+<main>
+<article>
+    <header class="article-head">
+        <svg class="arcs" width="620" height="620" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke-width="2"><circle cx="310" cy="310" r="300" stroke="#D9E2EA"/><circle cx="310" cy="310" r="240" stroke="#D9E2EA"/><circle cx="310" cy="310" r="180" stroke="#D9E2EA"/><circle cx="310" cy="310" r="240" stroke="#0267AE" stroke-width="5" stroke-dasharray="120 2000" transform="rotate(200 310 310)"/></g></svg>
+        <div class="wrap">
+            <a class="tag analise" href="../blog.html?tipo=analise"><i></i>Análise técnica</a>
+            <h1>Engenharia de Escolhas: a soft skill por trás da soberania de dados</h1>
+            <p class="ex">Todo arquiteto sabe provisionar uma VM. O que separa o sênior é decidir com informação incompleta e deixar escrito o porquê.</p>
+            <p class="meta">Frederick Moschkowich · <time datetime="2026-10-10">10 de outubro de 2026</time> · 8 min de leitura</p>
+        </div>
+    </header>
+    <div class="article-body">
+        <div class="wrap">
+            <div class="prose">
+                <blockquote>
+<p><em>Palestra apresentada no DevParaná na Estrada (Ponta Grossa, 09/04/2026, e Curitiba, 11/04/2026) e no The Developers Live Weekend (Maringá, 30/05/2026).</em></p>
+</blockquote>
+<p>Você sabe onde o dado do seu sistema dorme essa noite?</p>
+<p>Não a região no console. O endereço físico. E, junto com ele, a lei que manda naquele prédio.</p>
+<p>Fiz essa pergunta em três palcos este ano. Dado mal arquitetado é como um assalto que você só percebe no dia seguinte. Na hora não dói. Dói quando chega a notificação da ANPD, ou quando o gestor liga num domingo perguntando por que a operação parou por causa de uma lei que ninguém do time leu.</p>
+<p>Projeto não falha por falta de tecnologia. Falha por falta de decisão. Este texto é sobre a habilidade que ninguém ensina e todo mundo cobra quando o negócio aperta: escolher bem e deixar a escolha registrada.</p>
+<h2>O martelo de ouro (o de 2026 se chama IA)</h2>
+<p>Quem aprende uma ferramenta muito bem começa a enxergar prego em todo lugar. É a síndrome do martelo de ouro.</p>
+<p>O dev que quer controlar um foguete com React. O arquiteto que sobe um cluster Kubernetes de cinco nós para orquestrar três containers, &quot;porque escala&quot;. O gestor que descobriu IA generativa e quer trocar o time de suporte inteiro na segunda-feira. Esse último eu já vi acontecer.</p>
+<p>O martelo deste ano tem nome. A frase que todo mundo repete diz que a IA não vai tirar seu emprego, mas alguém que sabe usar IA vai. Pode até ser. Só que usar IA bem depende menos de técnica e mais de uma coisa que pouca gente treina: dar contexto.</p>
+<h2>Com IA, existe pergunta errada</h2>
+<p>Compare dois pedidos para a mesma ferramenta.</p>
+<p><strong>Pedido 1:</strong> &quot;Qual cloud devo usar para minha aplicação?&quot;</p>
+<p><strong>Pedido 2:</strong> &quot;Sou arquiteto de uma fintech brasileira com 500 mil usuários. Dados financeiros de pessoa física, LGPD obrigatória, orçamento em reais, latência abaixo de 50 ms. Qual estratégia de cloud você recomenda, considerando jurisdição legal e câmbio?&quot;</p>
+<p>A resposta ao primeiro vem bonita, com tópicos e tudo, e não serve para nada. O segundo muda o jogo porque carrega as restrições que definem a decisão.</p>
+<p>Entre humanos, pergunta vaga gera resposta vaga. Com IA, pergunta vaga gera resposta vaga com a confiança de um especialista sênior. O júnior implementa, e na sexta-feira alguém explica para o gestor.</p>
+<p>A cura do martelo passa por colocar conceito acima de ferramenta. Você continua com o martelo; só para de achar que tudo é prego. Ferramenta muda toda semana, conceito dura a carreira inteira. Menor privilégio é conceito. Latência como decisão de negócio também. E jurisdição como variável de arquitetura, que é onde este texto vai chegar.</p>
+<h2>O elevador: a mesma decisão em três andares</h2>
+<p>Decidir bem resolve o problema técnico. Comunicar a decisão resolve o problema humano. São problemas diferentes, e pedem habilidades diferentes.</p>
+<p>A melhor imagem que conheço para isso é a do Gregor Hohpe, no livro <em>The Software Architect Elevator</em>: o arquiteto que anda de elevador. Ele sobe à cobertura para falar de dinheiro com o CEO, desce à garagem para falar de Kubernetes com os devs e troca a linguagem em cada andar. Ninguém está sendo enganado. Cada andar tem uma dor diferente.</p>
+<p>Veja a mesma decisão, levar o dado crítico para o Brasil, contada três vezes (números ilustrativos):</p>
+<table>
+<thead>
+<tr>
+<th>Andar</th>
+<th>Quem ouve</th>
+<th>Como você diz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Garagem</td>
+<td>devs</td>
+<td>&quot;O dado fica em região BR. A latência cai de ~180 ms para ~22 ms e o egress diminui.&quot;</td>
+</tr>
+<tr>
+<td>Meio</td>
+<td>PM, tech lead</td>
+<td>&quot;Provedor nacional, LGPD atendida desde o desenho, custo previsível em reais.&quot;</td>
+</tr>
+<tr>
+<td>Cobertura</td>
+<td>CEO, CFO</td>
+<td>&quot;Se travar lá fora, a operação não para aqui. Isso é continuidade de negócio.&quot;</td>
+</tr>
+</tbody></table>
+<p>Vale também na hora de pedir orçamento. Compare:</p>
+<blockquote>
+<p>&quot;Precisamos migrar porque o CLOUD Act pode comprometer nosso compliance com a LGPD mediante ordem judicial em jurisdição estrangeira.&quot;</p>
+</blockquote>
+<p>A resposta costuma ser um &quot;manda por e-mail&quot;, que é o jeito educado de dizer não. Agora:</p>
+<blockquote>
+<p>&quot;O dado dos nossos clientes está sob uma jurisdição que não responde à lei brasileira. Numa fiscalização da ANPD, a multa pode chegar a R$ 50 milhões por infração. Me dá três meses que eu resolvo, e ainda reduzo o custo.&quot;</p>
+</blockquote>
+<p>Mesma decisão. A segunda frase consegue o orçamento.</p>
+<p>Comunicar abre a porta. Decidir bem define o que você faz depois que entra.</p>
+<h2>As 3 dimensões da decisão</h2>
+<p>Hard skill diz o que é possível. Soft skill diz o que fazer.</p>
+<p>Todo arquiteto sabe rodar <code>terraform apply</code>. O sênior aparece na hora de decidir com informação incompleta e prazo apertado. Pensa no piloto de F1: qualquer um acelera na reta. O bom decide a hora de frear debaixo de chuva, com pneu quente e adversário colado. Ele tem telemetria, desgaste e gap na tela, mas nenhum dado garante o resultado. O que decide é julgamento.</p>
+<p>Para estruturar esse julgamento eu uso três dimensões:</p>
+<ul>
+<li><strong>Técnica:</strong> latência, SLA, resiliência, compliance.</li>
+<li><strong>Negócio:</strong> custo, lock-in, câmbio, time-to-market.</li>
+<li><strong>Contexto:</strong> jurisdição, geopolítica, maturidade do time.</li>
+</ul>
+<p>Toda decisão ruim que vi na carreira ignorou pelo menos uma delas. Quase sempre a terceira, porque ela não aparece em benchmark nem em gráfico de latência. Aparece na notificação da ANPD.</p>
+<p>Um ponto que costuma ser mal explicado: a LGPD não deixa de valer só porque o datacenter fica em outro país. Ela continua valendo para quem trata dado de pessoas no Brasil. O problema é que outra lei passa a valer <strong>também</strong>. O CLOUD Act americano, por exemplo, permite que autoridades dos EUA, com ordem judicial, exijam de provedores americanos dados que eles guardam fora dos EUA. Repare que o que pesa aí é a nacionalidade do provedor, e não só a região escolhida no console. Dois ordenamentos sobre o mesmo dado entram na conta da arquitetura, junto com latência e custo.</p>
+<p>E tem o argumento que fecha qualquer reunião melhor que LGPD e latência: dinheiro. Conta em dólar paga em real sobe com o câmbio, mesmo sem mudar uma linha da arquitetura. {{Dado com fonte: variação do dólar (PTAX, Banco Central) de 2020 até a data de publicação, e o que isso faz com a mesma fatura}}. Nenhum CFO aprova um aumento desses sem questionar a arquitetura. Melhor você questionar antes dele.</p>
+<h2>Dois cases (fictícios, com padrões reais)</h2>
+<p><strong>Herança sem testamento.</strong> O BetaBank escolheu sua cloud por decisão do gestor, sem ADR e sem o time técnico na sala. Dezoito meses depois: lacuna de LGPD, custo 60% acima do previsto e o arquiteto sênior pedindo demissão. A frase dele na saída: &quot;Não fui ouvido na decisão, mas sou cobrado pelo resultado.&quot; Quem herda a infraestrutura não herda o porquê. E o post-mortem de decisão ruim sempre sobra para quem chegou depois.</p>
+<p><strong>Processo, e não sorte.</strong> Na GammaLog, o arquiteto conduziu um ADR com três cenários: tudo fora do Brasil, tudo nacional e híbrido. Levou ao gestor os trade-offs de cada dimensão. Escolheram o híbrido: dado crítico de brasileiros num provedor nacional, analytics onde o custo fazia mais sentido. Quando veio regulação nova e o câmbio disparou, já estavam cobertos.</p>
+<h2>ADR: o menor documento com o maior retorno</h2>
+<p>ADR é Architecture Decision Record. Quatro campos, cinco minutos para escrever:</p>
+<pre><code class="language-markdown"># ADR-001: {{título da decisão}}
+
+## Contexto
+{{o problema, as restrições e as 3 dimensões}}
+
+## Decisão
+{{o que foi escolhido}}
+
+## Alternativas consideradas
+{{o que ficou de fora e por quê}}
+
+## Consequências
+{{o que fica mais fácil, o que fica mais difícil, o que monitorar}}
+</code></pre>
+<p>É esse documento que te protege quando o auditor ou o gestor perguntam: &quot;por que vocês escolheram isso?&quot;</p>
+<p>Já cheguei em projeto sem nenhum ADR. É como chegar numa cidade nova sem mapa e sem ninguém que morou lá antes. Você se vira, mas perde um tempo que não precisava perder.</p>
+<p>O mesmo raciocínio vale para o code review, onde essa habilidade aparece todo dia. No review, o objetivo é melhorar quem escreveu o código, e o código melhora junto. Pergunte e sugira antes de afirmar. É engenharia de escolhas aplicada a um PR.</p>
+<p>Quem documenta decisão cresce mais rápido: o erro vira aprendizado registrado, e não vergonha silenciosa que se repete no próximo projeto.</p>
+<h2>Para levar</h2>
+<ul>
+<li>Cuidado com o martelo de ouro, principalmente quando ele se chama IA.</li>
+<li>Com IA existe, sim, pergunta errada: a que vem sem contexto.</li>
+<li>Ande de elevador. Comunique por andar, não por cargo.</li>
+<li>Técnica, negócio e contexto. Ignore uma dimensão e você paga a conta.</li>
+<li>ADR é o menor artefato com o maior retorno da sua carreira.</li>
+<li>Soberania de dados começa no refinamento. Começa com você.</li>
+</ul>
+<p>Hard skills te dão o emprego. Soft skills constroem a sua carreira.</p>
+<hr>
+<p>Se este texto te lembrou de uma decisão sem ADR no seu projeto, manda para quem vai herdar ela.</p>
+
+            </div>
+            <aside class="share" aria-label="Compartilhar">
+                <h3>Manda pra quem precisa ler isso</h3>
+                <div class="row-btn">
+                    <a href="#" data-share="linkedin">LinkedIn</a>
+                    <a href="#" data-share="whatsapp">WhatsApp</a>
+                    <button type="button" data-share="copy">Copiar link</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+</main>
+<footer class="site-footer">
+    <div class="wrap">
+        <div>
+            <a class="logo" href="../index.html" style="font-size:19px">
+                <img src="../images/anel-provisorio.svg" alt="" width="24" height="24">
+                <span><span class="f">fredmosc</span><span class="p">.</span><span class="t">tech</span></span>
+            </a>
+            <p class="tl">Frederick Moschkowich. Cloud, DevOps e IA sem hype, de Foz do Iguaçu.</p>
+            <p class="copy">© 2026 fredmosc.tech · <a href="../privacidade.html">Privacidade</a> · <a href="#" data-consent-open>Cookies</a></p>
+        </div>
+        <nav aria-label="Redes">
+            <a href="https://www.linkedin.com/in/fredmosc" rel="me noopener" target="_blank">LinkedIn</a>
+            <a href="https://www.instagram.com/fredmosc.dev" rel="me noopener" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@fredmosc_dev" rel="me noopener" target="_blank">YouTube</a>
+            <a href="https://github.com/fredmosc" rel="me noopener" target="_blank">GitHub</a>
+            <a href="mailto:contato@fredmosc.dev">contato@fredmosc.dev</a>
+        </nav>
+    </div>
+</footer>
+<script src="../js/site.js" defer></script>
+</body>
+</html>

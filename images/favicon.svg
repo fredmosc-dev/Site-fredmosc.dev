@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30">
+  <!-- PROVISÓRIO: substituir pelo arquivo oficial do logo fredmosc.tech quando o designer entregar -->
+  <circle cx="15" cy="15" r="11" fill="none" stroke="#0267AE" stroke-width="3.2" pathLength="100" stroke-dasharray="48 52" transform="rotate(-90 15 15)"/>
+  <circle cx="15" cy="15" r="11" fill="none" stroke="#1B9827" stroke-width="3.2" pathLength="100" stroke-dasharray="0 50 28 22" transform="rotate(-90 15 15)"/>
+  <circle cx="15" cy="15" r="11" fill="none" stroke="#EB641A" stroke-width="3.2" pathLength="100" stroke-dasharray="0 80 18 2" transform="rotate(-90 15 15)"/>
+</svg>

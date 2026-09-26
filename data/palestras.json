@@ -1,0 +1,71 @@
+{
+  "_leia": "Fonte única das palestras. Edite só este arquivo; home e /palestras leem daqui. Datas em AAAA-MM-DD. 'foto' é o caminho da imagem em images/palestras/ (null = mostra marcador). Palcos institucionais entram só em 'palcos', sem título e sem marca.",
+  "proximos": [
+    {
+      "evento": "Latinoware 2026",
+      "local": "Foz do Iguaçu/PR",
+      "quando": "Outubro de 2026",
+      "detalhe": "Nova versão de Engenharia de Escolhas",
+      "confirmado": false
+    }
+  ],
+  "teses": [
+    {
+      "id": "engenharia-de-escolhas",
+      "titulo": "Engenharia de Escolhas: A Soft Skill por trás da Soberania de Dados",
+      "rotulo": "Decisão",
+      "tese": "Hard skill te diz o que é possível. Soft skill te diz o que fazer. Ser sênior é decidir sob incerteza e documentar o porquê.",
+      "ideias": [
+        ["As 3 dimensões da decisão:", "técnica, negócio e contexto. A que mais se ignora é a de contexto: jurisdição, câmbio e maturidade do time."],
+        ["O elevador:", "a mesma decisão, contada de um jeito na garagem com os devs e de outro na cobertura com o CFO."],
+        ["ADR:", "quatro campos, cinco minutos. O menor documento com o maior retorno da carreira."]
+      ],
+      "foto": null,
+      "legenda_foto": "DevParaná na Estrada · Curitiba",
+      "artigo": "articles/engenharia-de-escolhas.html",
+      "apresentacoes": [
+        {"data": "2026-04-09", "evento": "DevParaná na Estrada", "local": "Ponta Grossa/PR"},
+        {"data": "2026-04-11", "evento": "DevParaná na Estrada", "local": "Curitiba/PR"},
+        {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR"}
+      ]
+    },
+    {
+      "id": "prompt-nao-e-arquitetura",
+      "titulo": "Prompt Não é Arquitetura",
+      "rotulo": "IA",
+      "tese": "A IA escreve o código. A decisão, e quem responde por ela às 3h da manhã, continua sendo sua.",
+      "ideias": [],
+      "foto": null,
+      "legenda_foto": "The Developers Live · Londrina",
+      "artigo": null,
+      "apresentacoes": [
+        {"data": "2026-09-06", "evento": "TDC no HackTown", "local": "Santa Rita do Sapucaí/MG"},
+        {"data": "2026-09-10", "evento": "The Developers Live", "local": "Londrina (online)"}
+      ]
+    },
+    {
+      "id": "custo-invisivel-da-ia",
+      "titulo": "O Custo Invisível da IA: Câmbio, Compliance e Controle",
+      "rotulo": "Custo",
+      "tese": "O preço da IA não está na tabela do fornecedor. Está no dólar que oscila, na auditoria que chega depois e no controle que você entregou sem perceber.",
+      "ideias": [],
+      "foto": null,
+      "legenda_foto": "Sebrae · Maringá",
+      "artigo": null,
+      "apresentacoes": [
+        {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR"}
+      ]
+    }
+  ],
+  "palcos": [
+    {"data": "2026-09-10", "evento": "The Developers Live", "local": "Londrina (online)", "tema": "Prompt Não é Arquitetura"},
+    {"data": "2026-09-06", "evento": "TDC no HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura"},
+    {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR", "tema": "Engenharia de Escolhas"},
+    {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR", "tema": "O Custo Invisível da IA"},
+    {"data": "2026-05-08", "evento": "Gramado Summit", "local": "Gramado/RS", "tema": "Soberania de dados", "institucional": true},
+    {"data": "2026-04-25", "evento": "DevParaná na Estrada", "local": "Foz do Iguaçu/PR", "tema": "Cloud nacional", "institucional": true},
+    {"data": "2026-04-11", "evento": "DevParaná na Estrada", "local": "Curitiba/PR", "tema": "Engenharia de Escolhas"},
+    {"data": "2026-04-09", "evento": "DevParaná na Estrada", "local": "Ponta Grossa/PR", "tema": "Engenharia de Escolhas"},
+    {"data": "2026-03-21", "evento": "Startup Day", "local": "Foz do Iguaçu/PR", "tema": "Cloud nacional", "institucional": true}
+  ]
+}

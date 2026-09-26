@@ -1,169 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CWTC51T090"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CWTC51T090');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Artigos sobre cloud computing, arquitetura de software, DevOps e tecnologia - Frederick Moschkowichc">
-    <title>Blog - fredmosc.dev | Frederick Moschkowich</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/blog.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Análises · fredmosc.tech</title>
+    <meta name="description" content="Notícia, análise técnica e relato sobre Cloud, DevOps e IA. Sempre com data e fonte.">
+    <meta name="author" content="Frederick Moschkowich">
+    <link rel="canonical" href="https://fredmosc.tech/blog.html">
+    <meta property="og:site_name" content="fredmosc.tech">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Análises · fredmosc.tech">
+    <meta property="og:description" content="Notícia, análise técnica e relato sobre Cloud, DevOps e IA. Sempre com data e fonte.">
+    <meta property="og:url" content="https://fredmosc.tech/blog.html">
+    <meta property="og:image" content="https://fredmosc.tech/images/og-fredmosc-tech.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0267AE">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preload" href="fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 </head>
-<body>
-    <!-- Header (same as index) -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <img src="images/logo.png" alt="FredMosc.dev">
-                </a>
-                
-                <nav class="nav" id="nav">
-                    <a href="index.html#home" class="nav-link">Início</a>
-                    <a href="about.html" class="nav-link">Sobre</a> 
-                    <a href="blog.html" class="nav-link">Blog</a>
-                    <a href="index.html#cursos" class="nav-link">Cursos</a>
-                    <a href="index.html#eventos" class="nav-link">Eventos</a>
-                    <a href="index.html#contato" class="nav-link">Contato</a>
-                </nav>
-                
-                <button class="btn btn-primary desktop-only" onclick="window.location.href='index.html#contato'">
-                    Whitepapers Gratuitos
-                </button>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+<body data-root="">
+<header class="site-header">
+    <div class="wrap">
+        <a class="logo" href="index.html" aria-label="fredmosc.tech, página inicial">
+            <!-- PROVISÓRIO: trocar pelo arquivo oficial do logo quando o designer entregar -->
+            <img src="images/anel-provisorio.svg" alt="" width="30" height="30">
+            <span><span class="f">fredmosc</span><span class="p">.</span><span class="t">tech</span></span>
+        </a>
+        <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="nav" id="nav" aria-label="Principal">
+            <a href="blog.html" aria-current="page">Análises</a><a href="palestras.html">Palestras</a><a href="about.html">Sobre</a><a href="mailto:contato@fredmosc.dev">Contato</a>
+        </nav>
+    </div>
+</header>
+<main>
+<section class="phero">
+    <svg class="arcs" width="620" height="620" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke-width="2"><circle cx="310" cy="310" r="300" stroke="#D9E2EA"/><circle cx="310" cy="310" r="240" stroke="#D9E2EA"/><circle cx="310" cy="310" r="180" stroke="#D9E2EA"/><circle cx="310" cy="310" r="240" stroke="#0267AE" stroke-width="5" stroke-dasharray="120 2000" transform="rotate(200 310 310)"/></g></svg>
+    <div class="wrap">
+        <div class="eyebrow"><i></i>Análises</div>
+        <h1>O que aconteceu, como funciona e o que eu vivi.</h1>
+        <p class="lead">Notícia com análise para quem decide arquitetura. Sempre com data e fonte.</p>
+    </div>
+</section>
+<section class="block">
+    <div class="wrap">
+        <div class="filters" role="toolbar" aria-label="Filtrar por tipo">
+            <button type="button" data-tipo="todas" aria-pressed="true">Todas</button>
+            <button type="button" data-tipo="noticia" aria-pressed="false"><i style="background:var(--azul)"></i>Notícia</button>
+            <button type="button" data-tipo="analise" aria-pressed="false"><i style="background:var(--verde)"></i>Análise técnica</button>
+            <button type="button" data-tipo="relato" aria-pressed="false"><i style="background:var(--laranja)"></i>Relato</button>
+            <button type="button" data-tipo="fora" aria-pressed="false"><i style="background:var(--texto-3)"></i>Fora da tech</button>
+            <label class="sr-only" for="search">Buscar</label>
+            <input class="search" id="search" type="search" placeholder="Buscar por tema ou ferramenta">
         </div>
-    </header>
+        <div class="grid3" id="articles" aria-live="polite"></div>
+    </div>
+</section>
 
-    <!-- Blog Hero -->
-    <section class="blog-hero">
-        <div class="container">
-            <h1>Blog</h1>
-            <p>Artigos sobre desenvolvimento, arquitetura de software, cloud computing e tecnologia</p>
-            
-            <!-- Search -->
-            <div class="blog-search">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" id="searchInput" placeholder="Buscar artigos...">
-            </div>
+<section class="block news" id="newsletter-sec">
+    <div class="wrap">
+        <div>
+            <div class="eyebrow"><i></i>Por e-mail</div>
+            <h2 style="margin-top:14px">As análises chegam antes da conta.</h2>
+            <p class="l">Uma seleção do que mudou em Cloud, DevOps e IA, com o custo explicado. Sem spam. Cancele quando quiser.</p>
         </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="blog-categories">
-        <div class="container">
-            <div class="categories-list" id="categoriesList">
-                <button class="category-btn active" data-category="all">Todos</button>
-                <button class="category-btn" data-category="Arquitetura">Arquitetura</button>
-                <button class="category-btn" data-category="Cloud">Cloud</button>
-                <button class="category-btn" data-category="Segurança">Segurança</button>
-                <button class="category-btn" data-category="DevOps">DevOps</button>
-                <button class="category-btn" data-category="Desenvolvimento">Desenvolvimento</button>
-                <button class="category-btn" data-category="Linux">Linux</button>
-            </div>
+        <form class="form" id="newsletter" novalidate>
+            <label class="f">Nome<input type="text" id="nl-name" name="fields[name]" autocomplete="name" required></label>
+            <label class="f">E-mail<input type="email" id="nl-email" name="fields[email]" autocomplete="email" required></label>
+            <label class="chk"><input type="checkbox" id="consent-news" required><span>Aceito receber os e-mails e li a <a href="privacidade.html">Política de Privacidade</a>.</span></label>
+            <button class="btn" type="submit">Quero receber</button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+    </div>
+</section>
+</main>
+<footer class="site-footer">
+    <div class="wrap">
+        <div>
+            <a class="logo" href="index.html" style="font-size:19px">
+                <img src="images/anel-provisorio.svg" alt="" width="24" height="24">
+                <span><span class="f">fredmosc</span><span class="p">.</span><span class="t">tech</span></span>
+            </a>
+            <p class="tl">Frederick Moschkowich. Cloud, DevOps e IA sem hype, de Foz do Iguaçu.</p>
+            <p class="copy">© 2026 fredmosc.tech · <a href="privacidade.html">Privacidade</a> · <a href="#" data-consent-open>Cookies</a></p>
         </div>
-    </section>
-
-    <!-- Articles Grid -->
-    <section class="blog-articles">
-        <div class="container">
-            <div class="articles-grid" id="articlesGrid">
-                <!-- Articles will be loaded here -->
-            </div>
-            
-            <div id="noResults" class="no-results" style="display: none;">
-                <p>Nenhum artigo encontrado.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer (same as index) -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col footer-about">
-                    <img src="images/logo.png" alt="FredMosc.dev" class="footer-logo">
-                    <p>Onde a Arquitetura de Nuvem encontra a clareza do Jornalismo. 
-                        Com <strong>30 anos de estrada</strong>, minha missão é simples: 
-                        te ensinar os fundamentos para que sua carreira — e sua infraestrutura — 
-                        nunca parem de escalar.</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Links Rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="about.html">Sobre mim</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="index.html#cursos">Cursos</a></li>
-                        <li><a href="index.html#eventos">Eventos</a></li>
-                        <li><a href="index.html#contato">Contato</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Redes Sociais</h3>
-                    <div class="footer-social">
-                        <a href="https://linkedin.com/in/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                        <a href="https://github.com/fredmosc" target="_blank" rel="noopener noreferrer" class="social-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                            </svg>
-                        </a>
-                        <a href="https://instagram.com/fredmosc.dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-
-                        <!-- YouTube -->
-                        <a href="https://youtube.com/@fredmosc_dev" target="_blank" rel="noopener noreferrer" class="social-btn social-btn-youtube">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                            </svg>
-                        </a>
-                        <a href="mailto:contato@fredmosc.dev" class="social-btn social-btn-secondary">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fred Mosc. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
-    <script src="js/blog.js"></script>
+        <nav aria-label="Redes">
+            <a href="https://www.linkedin.com/in/fredmosc" rel="me noopener" target="_blank">LinkedIn</a>
+            <a href="https://www.instagram.com/fredmosc.dev" rel="me noopener" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@fredmosc_dev" rel="me noopener" target="_blank">YouTube</a>
+            <a href="https://github.com/fredmosc" rel="me noopener" target="_blank">GitHub</a>
+            <a href="mailto:contato@fredmosc.dev">contato@fredmosc.dev</a>
+        </nav>
+    </div>
+</footer>
+<script src="js/site.js" defer></script>
 </body>
 </html>
