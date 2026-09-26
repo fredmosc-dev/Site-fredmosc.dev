@@ -33,10 +33,10 @@
       "artigo": null
     },
     {
-      "id": "custo-invisivel-da-ia",
-      "titulo": "O Custo Invisível da IA: Câmbio, Compliance e Controle",
+      "id": "custo-invisivel-da-nuvem",
+      "titulo": "O Custo Invisível da Nuvem: Câmbio, Compliance e Controle",
       "rotulo": "Custo",
-      "tese": "O preço da IA não está na tabela do fornecedor. Está no dólar que oscila, na auditoria que chega depois e no controle que você entregou sem perceber.",
+      "tese": "O preço da nuvem não está na tabela do fornecedor. Está no dólar que oscila, na auditoria que chega depois e no controle que você entregou sem perceber.",
       "ideias": [],
       "foto": "images/palestras/custo-invisivel-sebrae-maringa.jpg",
       "legenda_foto": "Sebrae · Maringá",
@@ -48,7 +48,7 @@
     {"data": "2026-09-10", "evento": "The Developers Live", "por": "Papo de Sysadmin", "local": "Londrina/PR (online)", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura"},
     {"data": "2026-09-06", "evento": "HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura", "destaque": true, "foto": "images/palestras/hacktown-destaque.jpg", "resumo": "Na trilha de IA corporativa do festival: a IA é o meio, a decisão continua sendo humana."},
     {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
-    {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR", "tema": "O Custo Invisível da IA", "tese": "custo-invisivel-da-ia"},
+    {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR", "tema": "O Custo Invisível da Nuvem", "tese": "custo-invisivel-da-nuvem", "institucional": true, "destaque": true, "foto": "images/palestras/sebrae-destaque.jpg"},
     {"data": "2026-05-08", "evento": "Gramado Summit", "local": "Gramado/RS", "tema": "Soberania de dados, muito além da latência", "institucional": true, "destaque": true, "foto": "images/palestras/gramado-summit-palco.jpg"},
     {"data": "2026-04-25", "evento": "DevParaná na Estrada", "local": "Foz do Iguaçu/PR", "tema": "Cloud nacional", "institucional": true},
     {"data": "2026-04-11", "evento": "DevParaná na Estrada", "local": "Curitiba/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
