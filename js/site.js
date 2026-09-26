@@ -18,7 +18,9 @@
   // AAAA-MM-DD -> DD/MM/AAAA sem passar por Date (evita cair no dia anterior por fuso)
   function fmtDate(ymd) {
     var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(ymd || '');
-    return m ? m[3] + '/' + m[2] + '/' + m[1] : esc(ymd);
+    if (m) return m[3] + '/' + m[2] + '/' + m[1];
+    var mm = /^(\d{4})-(\d{2})$/.exec(ymd || '');   // só mês: "10/2026"
+    return mm ? mm[2] + '/' + mm[1] : esc(ymd);
   }
   function typeOf(category) {
     var c = String(category || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -129,69 +131,147 @@
   }
 
   /* ---------- palestras ---------- */
-  function wherePlain(t) {
-    return t.apresentacoes.map(function (p) {
-      return esc(p.evento) + ' · ' + esc(p.local) + ' · ' + fmtDate(p.data);
-    }).join('<br>');
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  function todayYMD() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
-  function photo(t, cls) {
-    return t.foto
-      ? '<img class="pic-img ' + cls + '" src="' + ROOT + esc(t.foto) + '" alt="Fred palestrando: ' + esc(t.legenda_foto) + '" loading="lazy">'
-      : '<div class="ph ' + cls + '">[ foto ]<br>' + esc(t.legenda_foto) + '</div>';
+  // "2026-10" vale até o último dia de outubro; "2026-10-21" vale até o próprio dia
+  function endOf(data) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(data)) return data;
+    var m = /^(\d{4})-(\d{2})$/.exec(data || '');
+    if (!m) return '0000-00-00';
+    var last = new Date(Date.UTC(+m[1], +m[2], 0)).getUTCDate();
+    return m[1] + '-' + m[2] + '-' + String(last).padStart(2, '0');
+  }
+  function fmtWhen(data) {
+    var m = /^(\d{4})-(\d{2})$/.exec(data || '');
+    return m ? MESES[+m[2] - 1] + ' de ' + m[1] : fmtDate(data);
+  }
+  function city(local) { return String(local).split('/')[0].trim(); }
+  function isOnline(local) { return /online/i.test(local); }
+
+  function splitPalcos(d) {
+    var hoje = todayYMD();
+    var futuros = d.palcos.filter(function (p) { return endOf(p.data) >= hoje; })
+      .sort(function (a, b) { return a.data < b.data ? -1 : 1; });
+    var passados = d.palcos.filter(function (p) { return endOf(p.data) < hoje; })
+      .sort(function (a, b) { return a.data < b.data ? 1 : -1; });
+    return { futuros: futuros, passados: passados };
+  }
+  function stats(passados, teses) {
+    var cidades = {}, estados = {}, anos = {};
+    passados.forEach(function (p) {
+      anos[p.data.slice(0, 4)] = 1;
+      if (isOnline(p.local)) return;
+      cidades[city(p.local)] = 1;
+      var uf = /\/([A-Z]{2})/.exec(p.local);
+      if (uf) estados[uf[1]] = 1;
+    });
+    var a = Object.keys(anos).sort();
+    return {
+      palcos: passados.length,
+      cidades: Object.keys(cidades).length,
+      estados: Object.keys(estados).length,
+      teses: teses.length,
+      rotulo: a.length <= 1 ? 'palcos em ' + (a[0] || new Date().getFullYear()) : 'palcos desde ' + a[0]
+    };
+  }
+  function photo(foto, legenda, cls, h) {
+    var st = h ? ' style="height:' + h + 'px"' : '';
+    return foto
+      ? '<img class="pic-img ' + cls + '"' + st + ' src="' + ROOT + esc(foto) + '" alt="Fred palestrando: ' + esc(legenda) + '" loading="lazy">'
+      : '<div class="ph ' + cls + '"' + st + '>[ foto ]<br>' + esc(legenda) + '</div>';
+  }
+  function nextBar(futuros, withLink) {
+    if (!futuros.length) return '';
+    var n = futuros[0];
+    var extra = futuros.length > 1 ? ' · e mais ' + (futuros.length - 1) : '';
+    var when = fmtWhen(n.data) + (n.horario ? ' · ' + esc(n.horario) : '');
+    return '<div class="wrap"><div><div class="k">Próximo palco</div>' +
+      '<h3>' + esc(n.evento) + ' · ' + esc(n.local) + '</h3>' +
+      '<p>' + esc(n.tema) + ' · ' + when + extra + '</p></div>' +
+      (withLink ? '<a class="pill" href="' + ROOT + 'palestras.html">Ver palestras →</a>'
+                : '<span class="pill">' + (n.confirmado ? 'Confirmado' : 'Data a confirmar') + '</span>') + '</div>';
+  }
+  function wall(passados) {
+    var ordem = [], n = {};
+    passados.slice().reverse().forEach(function (p) {
+      if (!n[p.evento]) { n[p.evento] = 0; ordem.push(p.evento); }
+      n[p.evento]++;
+    });
+    // destaques primeiro
+    var dest = passados.filter(function (p) { return p.destaque; }).map(function (p) { return p.evento; });
+    ordem.sort(function (a, b) { return (dest.indexOf(a) === -1) - (dest.indexOf(b) === -1); });
+    return ordem.map(function (e) {
+      return '<span class="wall-item' + (dest.indexOf(e) !== -1 ? ' hot' : '') + '">' + esc(e) +
+        (n[e] > 1 ? '<small>×' + n[e] + '</small>' : '') + '</span>';
+    }).join('');
+  }
+  function featured(passados) {
+    return passados.filter(function (p) { return p.destaque; }).map(function (p) {
+      return '<article class="feat">' + photo(p.foto, p.evento + ' · ' + city(p.local), 'feat-pic') +
+        '<div class="feat-body"><div class="k">' + esc(p.evento) + '</div>' +
+        '<h3>' + esc(p.tema) + '</h3>' + (p.resumo ? '<p>' + esc(p.resumo) + '</p>' : '') +
+        '<div class="where">' + esc(p.local) + ' · ' + fmtDate(p.data) + '</div></div></article>';
+    }).join('');
+  }
+  function apresentacoes(tese, passados) {
+    return passados.filter(function (p) { return p.tese === tese.id; }).slice().reverse();
+  }
+  function fillStats(s) {
+    document.querySelectorAll('[data-stat]').forEach(function (e) {
+      var k = e.getAttribute('data-stat');
+      if (k === 'rotulo') e.textContent = s.rotulo; else if (s[k] != null) e.textContent = s[k];
+    });
   }
 
-  var talksHome = $('#talks-home');
-  var talksPage = $('#talks-list');
-  if (talksHome || talksPage) {
+  var talksHome = $('#talks-home'), talksPage = $('#talks-list'), nextHome = $('#next-home'), statEls = $('[data-stat]');
+  if (talksHome || talksPage || nextHome || statEls) {
     getJSON('data/palestras.json').then(function (d) {
-      var nPalcos = d.palcos.length, nTeses = d.teses.length;
-      document.querySelectorAll('[data-stat="palcos"]').forEach(function (e) { e.textContent = nPalcos; });
-      document.querySelectorAll('[data-stat="teses"]').forEach(function (e) { e.textContent = nTeses; });
+      var sp = splitPalcos(d), s = stats(sp.passados, d.teses);
+      fillStats(s);
+
+      if (nextHome) {
+        if (sp.futuros.length) nextHome.innerHTML = nextBar(sp.futuros, true);
+        else nextHome.remove();
+      }
+      var w = $('#talks-wall'); if (w) w.innerHTML = wall(sp.passados);
+      var f = $('#talks-feat'); if (f) f.innerHTML = featured(sp.passados);
 
       if (talksHome) {
         talksHome.innerHTML = d.teses.map(function (t) {
-          return '<div class="tcard">' + photo(t, '').replace('class="ph ', 'style="height:150px" class="ph ').replace('class="pic-img ', 'style="height:150px" class="pic-img ') +
+          var ap = apresentacoes(t, sp.passados);
+          return '<a class="tcard" href="' + ROOT + 'palestras.html#' + esc(t.id) + '">' +
+            '<div class="k">Tese · ' + esc(t.rotulo) + '</div>' +
             '<h3>' + esc(t.titulo) + '</h3><p>' + esc(t.tese) + '</p>' +
-            '<div class="where">' + wherePlain(t) + '</div></div>';
+            '<div class="where">' + ap.length + (ap.length > 1 ? ' palcos' : ' palco') + ' · ' +
+            ap.map(function (p) { return esc(city(p.local)); }).join(', ') + '</div></a>';
         }).join('');
-        var inst = d.palcos.filter(function (p) { return p.institucional; });
-        var oth = $('#talks-others');
-        if (oth && inst.length) {
-          oth.innerHTML = '<b>Outros palcos em 2026:</b> ' + inst.slice().reverse().map(function (p) {
-            return esc(p.evento) + ' ' + esc(p.local.split('/')[0]) + ' (' + fmtDate(p.data).slice(0, 5) + ')';
-          }).join(' · ');
-        }
       }
 
       if (talksPage) {
         var next = $('#talks-next');
-        if (next) {
-          if (d.proximos && d.proximos.length) {
-            var n = d.proximos[0];
-            next.innerHTML = '<div class="wrap"><div><div class="k">Próximo palco</div>' +
-              '<h3>' + esc(n.evento) + ' · ' + esc(n.local) + '</h3>' +
-              '<p>' + esc(n.detalhe) + ' · ' + esc(n.quando) + '</p></div>' +
-              '<span class="pill">' + (n.confirmado ? 'Confirmado' : 'Data a confirmar') + '</span></div>';
-          } else { next.remove(); }
-        }
+        if (next) { if (sp.futuros.length) next.innerHTML = nextBar(sp.futuros, false); else next.remove(); }
         talksPage.innerHTML = d.teses.map(function (t) {
+          var ap = apresentacoes(t, sp.passados);
           var ideias = t.ideias && t.ideias.length
             ? '<ul class="keys">' + t.ideias.map(function (i) { return '<li><span><b>' + esc(i[0]) + '</b> ' + esc(i[1]) + '</span></li>'; }).join('') + '</ul>'
             : '';
-          var link = t.artigo ? '<a href="' + ROOT + esc(t.artigo) + '">Ler o artigo →</a>' : '';
-          return '<article class="thesis" id="' + esc(t.id) + '">' + photo(t, 'pic') +
+          var link = t.artigo ? '<div class="links"><a href="' + ROOT + esc(t.artigo) + '">Ler o artigo →</a></div>' : '';
+          return '<article class="thesis" id="' + esc(t.id) + '">' + photo(t.foto, t.legenda_foto, 'pic') +
             '<div><div class="tag analise"><i></i>Tese · ' + esc(t.rotulo) + '</div>' +
             '<h2>' + esc(t.titulo) + '</h2><p class="q">' + esc(t.tese) + '</p>' + ideias +
-            '<div class="where2">' + t.apresentacoes.map(function (p) {
+            '<div class="where2">' + ap.map(function (p) {
               return '<b>' + esc(p.evento) + '</b> · ' + esc(p.local) + ' · ' + fmtDate(p.data);
-            }).join('<br>') + '</div>' +
-            (link ? '<div class="links">' + link + '</div>' : '') + '</div></article>';
+            }).join('<br>') + '</div>' + link + '</div></article>';
         }).join('');
         var hist = $('#talks-hist');
         if (hist) {
-          hist.innerHTML = d.palcos.map(function (p) {
+          hist.innerHTML = sp.passados.map(function (p) {
             return '<div class="row"><span class="d">' + fmtDate(p.data) + '</span><span class="e">' +
-              esc(p.evento) + ' · ' + esc(p.local) + '</span><span class="c">' + esc(p.tema) + '</span></div>';
+              esc(p.evento) + ' · ' + esc(p.local) + (p.destaque ? ' <em class="star">destaque</em>' : '') +
+              '</span><span class="c">' + esc(p.tema) + '</span></div>';
           }).join('');
         }
       }
