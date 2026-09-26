@@ -49,7 +49,7 @@
     {"data": "2026-09-06", "evento": "HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura", "destaque": true, "foto": "images/palestras/hacktown-destaque.jpg", "resumo": "Na trilha de IA corporativa do festival: a IA é o meio, a decisão continua sendo humana."},
     {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
     {"data": "2026-05-29", "evento": "Sebrae", "local": "Maringá/PR", "tema": "O Custo Invisível da IA", "tese": "custo-invisivel-da-ia"},
-    {"data": "2026-05-08", "evento": "Gramado Summit", "local": "Gramado/RS", "tema": "Soberania de dados, muito além da latência", "institucional": true, "destaque": true, "foto": null},
+    {"data": "2026-05-08", "evento": "Gramado Summit", "local": "Gramado/RS", "tema": "Soberania de dados, muito além da latência", "institucional": true, "destaque": true, "foto": "images/palestras/gramado-summit-palco.jpg"},
     {"data": "2026-04-25", "evento": "DevParaná na Estrada", "local": "Foz do Iguaçu/PR", "tema": "Cloud nacional", "institucional": true},
     {"data": "2026-04-11", "evento": "DevParaná na Estrada", "local": "Curitiba/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
     {"data": "2026-04-09", "evento": "DevParaná na Estrada", "local": "Ponta Grossa/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
