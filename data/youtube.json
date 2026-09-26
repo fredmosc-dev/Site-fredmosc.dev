@@ -1,0 +1,13 @@
+{
+  "_leia": [
+    "Configuração do feed de vídeos. O workflow youtube-feed.yml lê este arquivo e gera data/videos.json (não edite o videos.json à mão).",
+    "Shorts ficam de fora automaticamente. 'excluir': ids de vídeos que não devem aparecer. 'incluir': ids que o filtro de Shorts pegou por engano.",
+    "'playlists': cada item vira uma seção na página Vídeos. O id é o que vem depois de 'list=' no link da playlist."
+  ],
+  "channel_id": "UCdLgbIInxszsHyECQgoZyAg",
+  "canal_url": "https://www.youtube.com/@fredmosc-tech",
+  "max": 12,
+  "excluir": [],
+  "incluir": [],
+  "playlists": []
+}

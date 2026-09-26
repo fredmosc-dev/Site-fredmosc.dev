@@ -38,3 +38,15 @@ Para parar o servidor: `Ctrl + C` no terminal.
   `npm install` e depois `node .github/scripts/generate-articles.js`.
   No GitHub, o workflow faz isso sozinho a cada push na `main`.
 - Palestras: edite só `data/palestras.json`. A home e a página de palestras leem dali.
+
+## Vídeos do YouTube
+
+- A lista de vídeos vem de `data/videos.json`, gerado a partir do feed público do canal (sem chave de API).
+- No GitHub, o workflow `youtube-feed.yml` atualiza a cada 6 horas (só roda na `main`).
+- Para atualizar na sua máquina (com Node 18 ou mais novo):
+
+```
+node scripts/youtube-feed.js
+```
+
+- Shorts ficam de fora. Playlists e exclusões: edite `data/youtube.json`.
