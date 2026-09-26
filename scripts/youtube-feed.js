@@ -43,7 +43,7 @@ async function feed(param) {
   });
 }
 
-// Shorts: o link do feed costuma vir como /shorts/ (acredito; verificar). Como reforço,
+// Shorts: o link do feed vem como /shorts/ (conferido em 26/09/2026). Como reforço,
 // /shorts/ID responde 200 para Short e redireciona para /watch quando é vídeo normal.
 async function isShort(v) {
   if (cfg.incluir && cfg.incluir.includes(v.id)) return false;
@@ -63,11 +63,10 @@ function clean(v) {
 (async () => {
   const excluir = new Set(cfg.excluir || []);
   const canal = await feed('channel_id=' + encodeURIComponent(cfg.channel_id));
-  const longos = [];
+  const longos = [], shorts = [];
   for (const v of canal) {
     if (excluir.has(v.id)) continue;
-    if (await isShort(v)) continue;
-    longos.push(clean(v));
+    if (await isShort(v)) shorts.push(clean(v)); else longos.push(clean(v));
   }
   const playlists = [];
   for (const p of cfg.playlists || []) {
@@ -79,11 +78,11 @@ function clean(v) {
       videos: itens.filter(v => !excluir.has(v.id)).map(clean)
     });
   }
-  const novo = { videos: longos.slice(0, cfg.max || 12), playlists };
+  const novo = { videos: longos.slice(0, cfg.max || 12), shorts: shorts.slice(0, cfg.max_shorts || 6), playlists };
   let antigo = null;
   try { antigo = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8')); } catch (e) { /* primeira vez */ }
-  const igual = antigo && JSON.stringify({ videos: antigo.videos, playlists: antigo.playlists }) === JSON.stringify(novo);
+  const igual = antigo && JSON.stringify({ videos: antigo.videos, shorts: antigo.shorts, playlists: antigo.playlists }) === JSON.stringify(novo);
   if (igual) { console.log('Sem vídeos novos.'); return; }
   fs.writeFileSync(OUT_PATH, JSON.stringify(Object.assign({ atualizado: new Date().toISOString() }, novo), null, 2) + '\n');
-  console.log('data/videos.json atualizado: ' + novo.videos.length + ' vídeo(s) longo(s), ' + playlists.length + ' playlist(s).');
+  console.log('data/videos.json atualizado: ' + novo.videos.length + ' vídeo(s) longo(s), ' + novo.shorts.length + ' short(s), ' + playlists.length + ' playlist(s).');
 })().catch(e => { console.error('Falhou:', e.message); process.exit(1); });

@@ -283,8 +283,8 @@
   var CANAL = 'https://www.youtube.com/@fredmosc-tech';
   var PLAY = '<svg width="68" height="48" viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#0267AE"/><path d="M27 15 L47 24 L27 33 Z" fill="#fff"/></svg>';
   // Fachada: só carrega o player (youtube-nocookie) quando a pessoa clica
-  function ytFacade(v, big) {
-    return '<button class="yt' + (big ? ' yt-big' : '') + '" type="button" data-yt="' + esc(v.id) + '" aria-label="Assistir: ' + esc(v.titulo) + '">' +
+  function ytFacade(v, big, vertical) {
+    return '<button class="yt' + (big ? ' yt-big' : '') + (vertical ? ' yt-v' : '') + '" type="button" data-yt="' + esc(v.id) + '" aria-label="Assistir: ' + esc(v.titulo) + '">' +
       '<img src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" alt="" loading="lazy">' +
       '<span class="yt-play">' + PLAY + '</span></button>';
   }
@@ -296,7 +296,7 @@
     f.title = b.getAttribute('aria-label') || 'Vídeo';
     f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     f.allowFullscreen = true;
-    f.className = 'yt-frame';
+    f.className = 'yt-frame' + (b.classList.contains('yt-v') ? ' yt-v' : '');
     b.replaceWith(f);
   });
   function trim(s, n) { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
@@ -310,19 +310,34 @@
   if (vHome || vPage) {
     getJSON('data/videos.json').then(function (d) {
       var vids = d.videos || [];
+      var shorts = d.shorts || [];
       if (vHome) {
-        if (!vids.length) { vHome.remove(); return; }
-        var v = vids[0];
-        $('#video-home-slot').innerHTML =
-          '<div>' + ytFacade(v, true) + '</div>' +
-          '<div class="vtext"><div class="eyebrow"><i></i>Último vídeo</div><h2>' + esc(v.titulo) + '</h2>' +
-          '<p>' + esc(trim(v.descricao, 220)) + '</p><div class="meta">' + fmtDate(v.publicado) + '</div>' +
-          '<div class="links"><a href="' + ROOT + 'videos.html">Ver todos os vídeos →</a>' +
-          '<a href="' + CANAL + '?sub_confirmation=1" target="_blank" rel="noopener">Inscrever no canal</a></div></div>';
+        // vídeo longo mais recente; enquanto não houver, o Short mais recente
+        var v = vids[0] || shorts[0], isShort = !vids.length;
+        if (!v) { vHome.remove(); } else {
+          var slot = $('#video-home-slot');
+          if (isShort) slot.classList.add('is-short');
+          slot.innerHTML =
+            '<div>' + ytFacade(v, true, isShort) + '</div>' +
+            '<div class="vtext"><div class="eyebrow"><i></i>' + (isShort ? 'Último vídeo no canal' : 'Último vídeo') + '</div><h2>' + esc(v.titulo) + '</h2>' +
+            '<p>' + esc(trim(v.descricao, 220)) + '</p><div class="meta">' + fmtDate(v.publicado) + '</div>' +
+            '<div class="links"><a href="' + ROOT + 'videos.html">Ver todos os vídeos →</a>' +
+            '<a href="' + CANAL + '?sub_confirmation=1" target="_blank" rel="noopener">Inscrever no canal</a></div></div>';
+        }
       }
       if (vPage) {
         vPage.innerHTML = vids.length ? '<div class="grid3">' + vids.map(videoCard).join('') + '</div>'
           : '<div class="empty">Os primeiros vídeos longos chegam em breve. Enquanto isso, o canal está no <a href="' + CANAL + '" target="_blank" rel="noopener" style="color:var(--azul);text-decoration:underline">YouTube</a>.</div>';
+        var sh = $('#shorts-list');
+        if (sh) {
+          sh.innerHTML = shorts.length
+            ? '<section class="playlist"><div class="sec-head"><div><h2>Shorts</h2><p>O recado em menos de um minuto.</p></div>' +
+              '<a class="more" href="' + CANAL + '/shorts" target="_blank" rel="noopener">Ver no YouTube →</a></div>' +
+              '<div class="shorts">' + shorts.map(function (v) {
+                return '<article class="vcard">' + ytFacade(v, false, true) + '<div class="vbody"><h3>' + esc(v.titulo) + '</h3><div class="meta">' + fmtDate(v.publicado) + '</div></div></article>';
+              }).join('') + '</div></section>'
+            : '';
+        }
         var pl = $('#playlists');
         if (pl) {
           pl.innerHTML = (d.playlists || []).filter(function (p) { return p.videos && p.videos.length; }).map(function (p) {

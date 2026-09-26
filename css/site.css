@@ -344,3 +344,8 @@ a.tcard:hover{border-color:rgba(255,255,255,.45)}
   .vtext h2{font-size:26px}
   .gsp .wrap{flex-direction:column;align-items:flex-start;gap:8px}
 }
+.yt.yt-v,.yt-frame.yt-v{aspect-ratio:9/16}
+#video-home-slot.is-short{grid-template-columns:minmax(0,240px) 1fr;gap:56px}
+.shorts{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,220px));gap:20px}
+.shorts .vbody h3{font-size:15px}
+@media (max-width:760px){ #video-home-slot.is-short{grid-template-columns:1fr} #video-home-slot.is-short>div:first-child{max-width:260px} }
