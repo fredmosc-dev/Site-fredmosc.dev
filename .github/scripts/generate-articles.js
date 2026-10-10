@@ -160,5 +160,17 @@ const indexPath = path.join(articlesDir, 'articles-index.json');
 fs.writeFileSync(indexPath, JSON.stringify(articlesIndex, null, 2));
 
 console.log(`\n✓ Generated articles index: articles-index.json`);
+
+// Sitemap: páginas fixas + artigos (lastmod só nos artigos, onde a data é confiável)
+const SITE = 'https://fredmosc.tech';
+const staticPages = ['', 'about.html', 'blog.html', 'palestras.html', 'videos.html', 'privacidade.html'];
+const urls = staticPages.map(p => `  <url><loc>${SITE}/${p}</loc></url>`);
+articlesIndex.forEach(a => {
+    const lastmod = /^\d{4}-\d{2}-\d{2}$/.test(String(a.date)) ? `<lastmod>${a.date}</lastmod>` : '';
+    urls.push(`  <url><loc>${SITE}/${a.url}</loc>${lastmod}</url>`);
+});
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
+fs.writeFileSync(path.join(process.cwd(), 'sitemap.xml'), sitemap);
+console.log(`✓ Generated sitemap.xml (${urls.length} URLs)`);
 console.log(`\nTotal articles processed: ${articlesIndex.length}`);
 console.log('\nDone! 🎉');
