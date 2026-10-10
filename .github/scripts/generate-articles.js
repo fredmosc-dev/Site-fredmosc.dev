@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 
 // Directories
 const articlesDir = path.join(process.cwd(), 'articles');
-const templatePath = path.join(process.cwd(), 'article-template.html');
+const templatePath = path.join(process.cwd(), '.github', 'templates', 'article-template.html');
 
 // Read template
 const template = fs.readFileSync(templatePath, 'utf8');
