@@ -132,6 +132,22 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,58,82,.10
 .chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:var(--texto-2)}
 .chk input{margin-top:2px;width:16px;height:16px;accent-color:var(--azul);flex:none}
 .chk a{color:var(--azul);text-decoration:underline}
+.pref{border:1px solid var(--linha);border-radius:6px;background:#FAFBFC}
+.pref summary{cursor:pointer;padding:11px 14px;font-size:14px;font-weight:500;list-style:none;display:flex;align-items:center;gap:8px}
+.pref summary::-webkit-details-marker{display:none}
+.pref summary:before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:4px;background:var(--azul);color:#fff;font-weight:700;font-size:13px;flex:none}
+.pref[open] summary:before{content:"–"}
+.pref summary span{color:var(--texto-3);font-weight:400}
+.pref fieldset{border:0;margin:0;padding:4px 14px 14px}
+.pref legend{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-3);padding:0;margin-bottom:8px}
+.pref .opt{display:flex;gap:8px;align-items:center;font-size:14px;padding:4px 0;cursor:pointer}
+.pref .opt input{accent-color:var(--azul)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-block;border:1px solid #C5CED8;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;background:var(--branco)}
+.chip input:checked+span{background:var(--azul);border-color:var(--azul);color:#fff}
+.chip input:focus-visible+span{outline:2px solid var(--azul);outline-offset:2px}
 .form-msg{font-size:14px;min-height:1em}
 .form-msg.ok{color:var(--verde);font-weight:700}
 .form-msg.err{color:#B3261E}
