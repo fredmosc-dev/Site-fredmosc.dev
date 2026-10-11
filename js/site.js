@@ -406,6 +406,7 @@
         fd.set('LASTNAME', nome.join(' '));
         fd.set('EMAIL', email);          // e-mail já sem espaços nas pontas
         fd.set('email_address_check', ''); // sempre vazio: o autocompletar do Chrome preenchia qualquer honeypot e o Brevo descartava a inscrição
+        fd.set('ORIGEM', 'site-fredmosc.tech');
         fd.set('locale', 'pt');
         fd.set('cf-turnstile-response', token);
         return fetch(BREVO_URL, { method: 'POST', body: fd });
