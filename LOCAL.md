@@ -33,7 +33,7 @@ Para parar o servidor: `Ctrl + C` no terminal.
 ## Observações
 
 - Em `localhost` o Google Analytics **nunca** é carregado, mesmo clicando em "Aceitar".
-- O formulário de e-mail **é real**: uma inscrição feita localmente entra no MailerLite de verdade.
+- O formulário de e-mail envia para o **Brevo de verdade**, mas o Turnstile (anti-robô) só aceita o domínio `fredmosc.tech`: em `localhost` o envio falha na verificação. Para testar local, adicione `localhost` nos hostnames do widget no painel da Cloudflare.
 - Artigo novo: crie o `.md` em `articles/` e gere o HTML com
   `npm install` e depois `node .github/scripts/generate-articles.js`.
   No GitHub, o workflow faz isso sozinho a cada push na `main`.

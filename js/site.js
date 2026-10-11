@@ -3,7 +3,8 @@
   'use strict';
 
   var GA_ID = 'G-CWTC51T090';
-  var ML_URL = 'https://assets.mailerlite.com/jsonp/1926896/forms/171352208571368570/subscribe';
+  var BREVO_URL = 'https://ccbc6458.sibforms.com/serve/MUIFAGeGHkrSRoJSdkhS5x3gAu5YqyFxCdkR2FDNEyxxY1B6w61fXxRpVGc5S9Dhqd6iK_jEs6gxZHEwkal9pfvV93KQZac05-JAClkkNxAQ8CLEdbjqGKykZJB5Ffb1C7EGR10EXrKQhSSyTYcA7wJHcM1-6E6aZGFyxjXZi2T2LHDgmlks4KpSUNTz2B8siMpyTbxHXcz5VYseAw==?isAjax=1';
+  var TURNSTILE_KEY = '0x4AAAAAAFTaHdkwGqXzqStY';   // chave pública do widget (Cloudflare)
   var CONSENT_KEY = 'fm_consent_v1';
   var ROOT = document.body.getAttribute('data-root') || '';
   var IS_LOCAL = /^(localhost|127\.0\.0\.1|0\.0\.0\.0|)$/.test(location.hostname);
@@ -351,37 +352,72 @@
     }).catch(function (e) { console.error('videos:', e); if (vHome) vHome.remove(); });
   }
 
-  /* ---------- newsletter (MailerLite, JSONP, com consentimento) ---------- */
+  /* ---------- newsletter (Brevo + Cloudflare Turnstile, com consentimento) ---------- */
   var form = $('#newsletter');
   if (form) {
-    var msg = $('.form-msg', form), sub = $('button[type=submit]', form);
-    window.ml_callback = function (data) {
-      sub.disabled = false; sub.textContent = 'Quero receber';
-      if (data && data.success) {
-        form.innerHTML = '<p class="form-msg ok">Quase lá: confirme a inscrição no e-mail que acabei de enviar.</p>';
-      } else {
-        msg.className = 'form-msg err';
-        msg.textContent = 'Não consegui registrar. Confira o e-mail e tente de novo.';
-      }
+    var msg = $('.form-msg', form), sub = $('button[type=submit]', form), tsBox = $('#nl-turnstile', form);
+    var tsId = null, tsReady = null, tsWait = null;
+
+    // Turnstile só é carregado quando a pessoa começa a usar o formulário
+    var loadTurnstile = function () {
+      if (tsReady) return tsReady;
+      tsReady = new Promise(function (ok, no) {
+        window.__onTurnstile = function () {
+          tsId = window.turnstile.render(tsBox, {
+            sitekey: TURNSTILE_KEY, execution: 'execute', language: 'pt-br',
+            callback: function (t) { if (tsWait) { tsWait.ok(t); tsWait = null; } },
+            'error-callback': function () { if (tsWait) { tsWait.no(); tsWait = null; } }
+          });
+          ok();
+        };
+        var s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__onTurnstile';
+        s.async = true;
+        s.onerror = function () { tsReady = null; no(); };
+        document.head.appendChild(s);
+      });
+      return tsReady;
     };
+    var getToken = function () {
+      return loadTurnstile().then(function () {
+        return new Promise(function (ok, no) {
+          tsWait = { ok: ok, no: no };
+          window.turnstile.reset(tsId);
+          window.turnstile.execute(tsId);
+        });
+      });
+    };
+    var fail = function (t) {
+      sub.disabled = false; sub.textContent = 'Quero receber';
+      msg.className = 'form-msg err'; msg.textContent = t;
+    };
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (!$('#consent-news', form).checked) {
-        msg.className = 'form-msg err';
-        msg.textContent = 'Marque a caixa de consentimento para continuar.';
-        return;
-      }
+      var email = $('#nl-email', form).value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Confira o e-mail.');
+      if (!$('#consent-news', form).checked) return fail('Marque a caixa de consentimento para continuar.');
       sub.disabled = true; sub.textContent = 'Enviando...'; msg.textContent = '';
-      var p = new URLSearchParams({
-        'fields[name]': $('#nl-name', form).value,
-        'fields[email]': $('#nl-email', form).value,
-        'ml-submit': '1', 'anticsrf': 'true', 'callback': 'ml_callback'
+      var nome = $('#nl-name', form).value.trim().split(/\s+/);
+      getToken().then(function (token) {
+        var fd = new FormData(form);   // EMAIL, NIVEL, INTERESSES[]
+        fd.set('FIRSTNAME', nome.shift() || '');
+        fd.set('LASTNAME', nome.join(' '));
+        fd.set('EMAIL', email);          // e-mail já sem espaços nas pontas
+        fd.set('email_address_check', ''); // sempre vazio: o autocompletar do Chrome preenchia qualquer honeypot e o Brevo descartava a inscrição
+        fd.set('locale', 'pt');
+        fd.set('cf-turnstile-response', token);
+        return fetch(BREVO_URL, { method: 'POST', body: fd });
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (data && data.success) {
+          form.innerHTML = '<p class="form-msg ok">Quase lá: mandei um e-mail para confirmar sua inscrição. Clique no link dele (olhe o spam se não chegar em 5 minutos).</p>';
+        } else {
+          fail('Não consegui registrar. Confira o e-mail e tente de novo.');
+        }
+      }).catch(function () {
+        fail('A verificação anti-robô ou a conexão falhou. Tente de novo em instantes.');
       });
-      var s = document.createElement('script');
-      s.src = ML_URL + '?' + p.toString();
-      s.onload = function () { s.remove(); };
-      s.onerror = function () { window.ml_callback(null); s.remove(); };
-      document.body.appendChild(s);
     });
   }
 
